@@ -7,7 +7,7 @@ updates:
     schedule:
       interval: "daily"
     reviewers:
-      - "valispace/devops"
+      - "valispace/automations"
 
   # Maintain dependencies for Docker
   - package-ecosystem: "docker"
@@ -15,7 +15,7 @@ updates:
     schedule:
       interval: "daily"
     reviewers:
-      - "valispace/devops"
+      - "valispace/operations"
 
   # Maintain dependencies for Python
   - package-ecosystem: "pip"
