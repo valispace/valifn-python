@@ -1,9 +1,9 @@
-# ValiFn Python Image
+# ValiFn Python Image &middot; [![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=plastic&label=code%20style)](https://github.com/psf/black) [![code quality: pylint](https://img.shields.io/badge/code%20quality-pylint-yellowgreen?style=plastic&label=code%20quality)](https://github.com/PyCQA/pylint) [![code security: bandit](https://img.shields.io/badge/code%20security-bandit-yellow.svg?style=plastic&label=code%20security)](https://github.com/PyCQA/bandit) [![continuous integration](https://github.com/valispace/valifn-python/actions/workflows/continuous_integration.yml/badge.svg?style=plastic&label=continuous%20integration&branch=develop)](https://github.com/valispace/valifn-python/actions/workflows/continuous_integration.yml)
 
-ValiFn provides a way to connect and run scripts from Valispace in a safe and isolated environment.
+ValiFn provides a way to connect and run scripts from [Valispace](https://github.com/valispace) in a safe and isolated environment.
 
 This repository contains code to generate a `python image` to be used by ValiFn.
-You can add and remove requirements at your will, build the image and replace the original image provided by Valispace using the following instructions.
+You can add and remove requirements at your will, build the image and replace the original image provided by [Valispace](https://github.com/valispace) using the following instructions.
 
 ## How to install new image
 
@@ -45,3 +45,18 @@ $ docker load -i valifn-python.tar.gz
 ```
 
 7. Thats it! You have now replaced ValiFn Python Image to match your needs on your deployment. No restart is needed.
+
+
+## Documentation
+
+See the [Wiki](https://github.com/valispace/valifn-python/wiki) for details on project setup and usage, as also technical details.
+
+
+## Changelog
+
+Detailed changes for each release are documented in the [release notes](https://github.com/valispace/valifn-python/releases).
+
+
+## Copyright
+
+Copyright &copy; 2015-present, [Valispace GmbH](https://www.valispace.com/about-us/)
