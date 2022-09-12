@@ -1,0 +1,34 @@
+name: 'Build docker image'
+description: 'Builds a docker image of this application'
+inputs:
+  name:
+    description: 'Name for the docker image'
+    required: true
+    default: '${{ github.repository }}'
+  tag:
+    description: 'Tag for the docker image'
+    required: true
+    default: 'latest'
+  dockerfile:
+    description: 'Path to the Dockerfile'
+    required: true
+    default: 'Dockerfile'
+  archive:
+    description: 'Archive name of the docker image (must include `tar.gz` extension)'
+    required: true
+    default: 'docker.tar.gz'
+runs:
+  using: composite
+  steps:
+    - id: build
+      run: docker build --tag ${{ inputs.name }}:latest --file "${{ inputs.dockerfile }}" .
+      shell: bash
+    - id: tag
+      run: docker tag ${{ inputs.name }}:latest ${{ inputs.name }}:${{ inputs.tag }}
+      shell: bash
+    - id: save
+      run: docker save ${{ inputs.name }}:${{ inputs.tag }} | gzip > "${{ inputs.archive }}"
+      shell: bash
+    - id: test
+      run: tar --list --ungzip --file "${{ inputs.archive }}" 1> /dev/null
+      shell: bash
