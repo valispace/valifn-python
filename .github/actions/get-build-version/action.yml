@@ -1,0 +1,23 @@
+name: 'Get build version'
+description: 'Returns the current build version'
+inputs:
+  file:
+    description: 'Path to the python versioning file'
+    required: true
+    default: '__init__.py'
+outputs:
+  release:
+    description: 'Current release version (e.g. xx.yy)'
+    value: '${{ steps.release.outputs.version }}'
+  version:
+    description: 'Current build version (e.g. xx.yy.zz)'
+    value: '${{ steps.build.outputs.version }}'
+runs:
+  using: composite
+  steps:
+    - id: release
+      run: echo "::set-output name=version::$( echo "$( grep --extended-regexp "__version__" "${{ inputs.file }}" | grep --only-matching --extended-regexp "([[:digit:]]+)[.]([[:digit:]]+)" )" )"
+      shell: bash
+    - id: build
+      run: echo "::set-output name=version::$( echo "$( grep --extended-regexp "__version__" "${{ inputs.file }}" | grep --only-matching --extended-regexp "([[:digit:]]+)[.]([[:digit:]]+)[.]([[:digit:]]+)" )" )"
+      shell: bash
