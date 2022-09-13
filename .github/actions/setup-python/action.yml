@@ -1,0 +1,23 @@
+name: 'Set up python'
+description: 'Set up GitHub Actions workflow with a version of Python configured with Valispace settings'
+inputs:
+  requirements:
+    description: 'Path to the python requirements file'
+    required: true
+    default: 'requirements-dev.txt'
+runs:
+  using: composite
+  steps:
+    - id: python
+      uses: actions/setup-python@v4
+      with:
+        token: '${{ env.GITHUB_TOKEN }}'
+        python-version: '3.9'
+        cache: 'pip'
+        cache-dependency-path: '${{ inputs.requirements }}'
+    - id: libxmlsec1-dev
+      run: sudo apt-get update && sudo apt-get --assume-yes install pkg-config libxmlsec1-dev
+      shell: bash
+    - id: requirements
+      run: pip install --exists-action w --requirement "${{ inputs.requirements }}"
+      shell: bash

@@ -39,17 +39,11 @@ jobs:
 
       - name: 'Set up python'
         id: python
-        uses: actions/setup-python@v4
+        uses: ./.github/actions/setup-python
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
         with:
-          token: '${{ secrets.GITHUB_TOKEN }}'
-          python-version: '3.9'
-          cache: 'pip'
-          cache-dependency-path: 'requirements-dev.txt'
-
-      - name: 'Install requirements'
-        id: requirements
-        run: pip install --exists-action w --requirement "requirements-dev.txt"
-        shell: bash
+          requirements: 'requirements-dev.txt'
 
       - name: 'Check code with black'
         id: black
@@ -120,17 +114,11 @@ jobs:
 
       - name: 'Set up python'
         id: python
-        uses: actions/setup-python@v4
+        uses: ./.github/actions/setup-python
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
         with:
-          token: '${{ secrets.GITHUB_TOKEN }}'
-          python-version: '3.9'
-          cache: 'pip'
-          cache-dependency-path: 'requirements-dev.txt'
-
-      - name: 'Install requirements'
-        id: requirements
-        run: pip install --exists-action w --requirement "requirements-dev.txt"
-        shell: bash
+          requirements: 'requirements-dev.txt'
 
   dynamic_application_security_testing:
 
