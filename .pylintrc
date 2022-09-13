@@ -68,10 +68,10 @@ disable=raw-checker-failed,
         useless-suppression,
         deprecated-pragma,
         use-symbolic-message-instead,
-      # valispace rules: most of these rules should be enabled
-      # eventually and some can be defined as "warnings" later
-      # if you add something here try to explain why
-        missing-module-docstring,   # we're currently not using docstrings
+        # valispace rules: most of these rules should be enabled
+        # eventually and some can be defined as "warnings" later
+        # if you add something here try to explain why
+        missing-module-docstring,       # we're currently not using docstrings
         missing-function-docstring,
         missing-class-docstring,
         empty-docstring,
@@ -79,33 +79,13 @@ disable=raw-checker-failed,
         import-outside-toplevel,
         logging-fstring-interpolation,
         unused-variable,
-        no-member,                  # usually fails with django things :(
+        no-member,                      # usually fails with django things :(
         bare-except,
         fixme,
         wrong-import-position,
         logging-format-interpolation,
         invalid-name,
         broad-except,
-        # pointless-string-statement, # this thing can be a missing return (it was in a case I found)
-        unused-wildcard-import,       # enable once log is cleaner
-        unused-import,                # enable once log is cleaner
-        missing-final-newline,        # enable once log is cleaner
-        wildcard-import,              # enable once log is cleaner
-        wrong-import-order,           # enable once log is cleaner
-        line-too-long,                # enable once log is cleaner
-        #unused-argument,             # enable once log is cleaner
-        too-many-statements,          # enable once log is cleaner
-        too-many-branches,            # enable once log is cleaner
-        #trailing-newlines,           # enable once log is cleaner
-        #protected-access,            # enable once log is cleaner
-        unidiomatic-typecheck,        # enable once log is cleaner
-        #multiple-imports,            # enable once log is cleaner
-        #ungrouped-imports,           # enable once log is cleaner
-        #raise-missing-from,          # enable once log is cleaner
-        #redefined-outer-name,        # enable once log is cleaner
-        #unnecessary-comprehension,   # enable once log is cleaner
-        #consider-using-set-comprehension, # enable once log is cleaner
-        #no-self-use,                 # enable once log is cleaner (should be static)
         super-with-arguments,
         too-few-public-methods,
         too-many-locals,
@@ -114,11 +94,8 @@ disable=raw-checker-failed,
         too-many-nested-blocks,
         too-many-arguments,
         too-many-instance-attributes,
-        #abstract-method,
         arguments-differ,
         attribute-defined-outside-init,
-        #eval-used,
-        #unnecessary-pass,
         signature-differs,
         imported-auth-user,
 
@@ -191,10 +168,10 @@ ignore-comments=yes
 ignore-docstrings=yes
 
 # Ignore imports when computing similarities.
-ignore-imports=no
+ignore-imports=yes
 
 # Minimum lines number of a similarity.
-min-similarity-lines=4
+min-similarity-lines=10
 
 [LOGGING]
 
@@ -318,7 +295,7 @@ indent-string='    '
 max-line-length=120
 
 # Maximum number of lines in a module.
-max-module-lines=3000
+max-module-lines=3600
 
 # Allow the body of a class to be on the same line as the declaration if body
 # contains single statement.
