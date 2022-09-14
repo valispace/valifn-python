@@ -7,7 +7,7 @@ concurrency:
 on:
 
   schedule:
-    - cron: '30 1,13 * * 1-5' # At minute 30 past hour 1 and 13 on every day-of-week from Monday through Friday
+    - cron: '30 1 * * 1-5' # At minute 30 past hour 1 on every day-of-week from Monday through Friday
 
 jobs:
 
@@ -27,15 +27,16 @@ jobs:
         run: |
           echo "::set-output name=repository::$( echo "${{ github.repository }}" )"
           echo "::set-output name=repository_owner::$( echo "${{ github.repository_owner }}" )"
-          echo "::set-output name=repository_name::$( echo "${{ github.event.repository.name }}" )"
-          echo "::set-output name=branch::$( echo "${{ github.event.repository.default_branch }}" )"
+          echo "::set-output name=repository_name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
+          echo "::set-output name=branch_name::$( echo "${{ github.ref_name }}" )"
+          echo "::set-output name=branch_ref::$( echo "${{ github.ref }}" )"
         shell: bash
 
       - name: 'Check out repository'
         id: checkout
         uses: actions/checkout@v3
         with:
-          ref: '${{ steps.setup.outputs.branch }}'
+          ref: '${{ steps.setup.outputs.branch_ref }}'
 
       - name: 'Set up python'
         id: python
@@ -102,15 +103,16 @@ jobs:
         run: |
           echo "::set-output name=repository::$( echo "${{ github.repository }}" )"
           echo "::set-output name=repository_owner::$( echo "${{ github.repository_owner }}" )"
-          echo "::set-output name=repository_name::$( echo "${{ github.event.repository.name }}" )"
-          echo "::set-output name=branch::$( echo "${{ github.event.repository.default_branch }}" )"
+          echo "::set-output name=repository_name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
+          echo "::set-output name=branch_name::$( echo "${{ github.ref_name }}" )"
+          echo "::set-output name=branch_ref::$( echo "${{ github.ref }}" )"
         shell: bash
 
       - name: 'Check out repository'
         id: checkout
         uses: actions/checkout@v3
         with:
-          ref: '${{ steps.setup.outputs.branch }}'
+          ref: '${{ steps.setup.outputs.branch_ref }}'
 
       - name: 'Set up python'
         id: python
@@ -136,15 +138,16 @@ jobs:
         run: |
           echo "::set-output name=repository::$( echo "${{ github.repository }}" )"
           echo "::set-output name=repository_owner::$( echo "${{ github.repository_owner }}" )"
-          echo "::set-output name=repository_name::$( echo "${{ github.event.repository.name }}" )"
-          echo "::set-output name=branch::$( echo "${{ github.event.repository.default_branch }}" )"
+          echo "::set-output name=repository_name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
+          echo "::set-output name=branch_name::$( echo "${{ github.ref_name }}" )"
+          echo "::set-output name=branch_ref::$( echo "${{ github.ref }}" )"
         shell: bash
 
       - name: 'Check out repository'
         id: checkout
         uses: actions/checkout@v3
         with:
-          ref: '${{ steps.setup.outputs.branch }}'
+          ref: '${{ steps.setup.outputs.branch_ref }}'
 
       - name: 'Get build version'
         id: versioning
@@ -181,8 +184,9 @@ jobs:
         run: |
           echo "::set-output name=repository::$( echo "${{ github.repository }}" )"
           echo "::set-output name=repository_owner::$( echo "${{ github.repository_owner }}" )"
-          echo "::set-output name=repository_name::$( echo "${{ github.event.repository.name }}" )"
-          echo "::set-output name=branch::$( echo "${{ github.event.repository.default_branch }}" )"
+          echo "::set-output name=repository_name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
+          echo "::set-output name=branch_name::$( echo "${{ github.ref_name }}" )"
+          echo "::set-output name=branch_ref::$( echo "${{ github.ref }}" )"
           echo "::set-output name=channel::$( echo "#development" )"
         shell: bash
 
@@ -190,7 +194,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v3
         with:
-          ref: '${{ steps.setup.outputs.branch }}'
+          ref: '${{ steps.setup.outputs.branch_ref }}'
 
       - name: 'Get build version'
         id: versioning
@@ -217,5 +221,5 @@ jobs:
           fields: |
             [
                { "title": "Version", "value": "${{ steps.versioning.outputs.version }}", "short": true }
-              ,{ "title":  "Branch", "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ steps.setup.outputs.branch }}>", "short": true }
+              ,{ "title":  "Branch", "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ steps.setup.outputs.branch_name }}>", "short": true }
             ]
