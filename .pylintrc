@@ -32,7 +32,7 @@ limit-inference-results=512
 # List of plugins (as comma separated values of python module names) to load,
 # usually to register additional checkers.
 load-plugins=pylint_django
-django-settings-module=settings.base
+django-settings-module=settings.test
 
 # Pickle collected data for later comparisons.
 persistent=yes
