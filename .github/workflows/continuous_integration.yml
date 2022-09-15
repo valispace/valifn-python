@@ -7,7 +7,7 @@ concurrency:
 on:
 
   schedule:
-    - cron: '30 4,12 * * 1-5' # At minute 30 past hour 4 and 12 on every day-of-week from Monday through Friday
+    - cron: '30 4 * * 1-5' # At minute 30 past hour 4 on every day-of-week from Monday through Friday
 
 jobs:
 
@@ -208,7 +208,7 @@ jobs:
 
       - name: Notify channel '#${{ steps.setup.outputs.channel }}'
         id: notify
-        if: ${{ always() && (steps.workflow.outputs.status == 'failure') }}
+        if: ${{ (steps.workflow.outputs.status == 'failure') }}
         uses: adamkdean/simple-slack-notify@v1.1.2
         env:
           SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL }}'
