@@ -1,0 +1,35 @@
+name: 'Close Stale Issues'
+
+on:
+
+  schedule:
+    - cron: '15 1 * * *' # At 01:15
+
+jobs:
+
+  stale:
+
+    name: 'Stale'
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+      issues: write
+
+    steps:
+
+      - name: 'Check stale issues'
+        id: stale
+        uses: actions/stale@v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          stale-issue-message: 'Issue is stale and will be closed in 14 days unless there is new activity (hint: add stale-exempt label to keep it opened)'
+          stale-pr-message: 'Pull Request is stale and will be closed in 14 days unless there is new activity'
+          stale-issue-label: 'stale'
+          exempt-issue-labels: 'stale-exempt,enhancement'
+          stale-pr-label: 'stale'
+          exempt-pr-labels: 'stale-exempt'
+          remove-stale-when-updated: 'true'
+          operations-per-run: 500
+          days-before-stale: 7
+          days-before-close: 14
