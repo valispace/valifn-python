@@ -7,18 +7,19 @@ concurrency:
 on:
 
   schedule:
-    - cron: '30 4 * * 1-5' # At minute 30 past hour 4 on every day-of-week from Monday through Friday
+    - cron: '15 2 * * 1-5' # At minute 15 past hour 2 on every day-of-week from Monday through Friday
 
 jobs:
 
-  static_application_security_testing:
+  static-application-security-testing:
 
     name: 'Static Application Security Testing (SAST)'
-    runs-on: ubuntu-latest
 
     permissions:
       contents: read
       actions: read
+
+    runs-on: ubuntu-latest
 
     steps:
 
@@ -26,17 +27,17 @@ jobs:
         id: setup
         run: |
           echo "::set-output name=repository::$( echo "${{ github.repository }}" )"
-          echo "::set-output name=repository_owner::$( echo "${{ github.repository_owner }}" )"
-          echo "::set-output name=repository_name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
-          echo "::set-output name=branch_name::$( echo "${{ github.ref_name }}" )"
-          echo "::set-output name=branch_ref::$( echo "${{ github.ref }}" )"
+          echo "::set-output name=repository-owner::$( echo "${{ github.repository_owner }}" )"
+          echo "::set-output name=repository-name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
+          echo "::set-output name=branch-name::$( echo "${{ github.ref_name }}" )"
+          echo "::set-output name=branch-ref::$( echo "${{ github.ref }}" )"
         shell: bash
 
       - name: 'Check out repository'
         id: checkout
         uses: actions/checkout@v3
         with:
-          ref: '${{ steps.setup.outputs.branch_ref }}'
+          ref: '${{ steps.setup.outputs.branch-ref }}'
 
       - name: 'Set up python'
         id: python
@@ -44,15 +45,20 @@ jobs:
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
         with:
-          requirements: 'requirements-dev.txt'
+          python-version: '3.9'
+          python-requirements-file: 'requirements-dev.txt'
 
       - name: 'Check code with black'
         id: black
-        run: black --target-version py39 --line-length 120 --check .
-        shell: bash
+        if: ${{ success() || failure() }}
+        uses: mathiasvr/command-output@v1
+        with:
+          run: black --target-version py39 --line-length 120 --check script_code
+          shell: bash
 
       # - name: 'Check code with cspell'
       #   id: cspell
+      #   if: ${{ success() || failure() }}
       #   uses: check-spelling/check-spelling@v0.0.20
       #   with:
       #     event_aliases: '{"workflow_dispatch":"push"}'
@@ -87,14 +93,42 @@ jobs:
       #       cspell:css/css.txt
       #       cspell:filetypes/filetypes.txt
 
-  unit_testing:
+      - name: 'Check code with pylint'
+        id: pylint
+        if: ${{ success() || failure() }}
+        uses: mathiasvr/command-output@v1
+        with:
+          run: pylint --rcfile '.pylintrc' --py-version 3.9 --jobs 0 --recursive y --output-format text script_code
+          shell: bash
+
+      - name: 'Check code with bandit'
+        id: bandit
+        if: ${{ success() || failure() }}
+        uses: mathiasvr/command-output@v1
+        with:
+          run: bandit --quiet --recursive --exclude **/tests.py,*/tests/*,*/conftest.py --aggregate vuln --format txt script_code
+          shell: bash
+
+      # - name: 'Check code with sonarqube'
+      #   id: sonarqube
+      #   if: ${{ success() || failure() }}
+      #   uses: sonarsource/sonarqube-scan-action@master
+      #   env:
+      #     SONAR_HOST_URL: '${{ secrets.SONAR_HOST_URL }}'
+      #     SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
+      #   with:
+      #     projectBaseDir: "script_code"
+      #     args: "-Dsonar.python.coverage.reportPaths=coverage.xml -Dsonar.python.xunit.reportPaths=results.xml"
+
+  unit-testing:
 
     name: 'Unit Testing'
-    runs-on: ubuntu-latest
 
     permissions:
       contents: read
       actions: read
+
+    runs-on: ubuntu-latest
 
     steps:
 
@@ -102,17 +136,17 @@ jobs:
         id: setup
         run: |
           echo "::set-output name=repository::$( echo "${{ github.repository }}" )"
-          echo "::set-output name=repository_owner::$( echo "${{ github.repository_owner }}" )"
-          echo "::set-output name=repository_name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
-          echo "::set-output name=branch_name::$( echo "${{ github.ref_name }}" )"
-          echo "::set-output name=branch_ref::$( echo "${{ github.ref }}" )"
+          echo "::set-output name=repository-owner::$( echo "${{ github.repository_owner }}" )"
+          echo "::set-output name=repository-name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
+          echo "::set-output name=branch-name::$( echo "${{ github.ref_name }}" )"
+          echo "::set-output name=branch-ref::$( echo "${{ github.ref }}" )"
         shell: bash
 
       - name: 'Check out repository'
         id: checkout
         uses: actions/checkout@v3
         with:
-          ref: '${{ steps.setup.outputs.branch_ref }}'
+          ref: '${{ steps.setup.outputs.branch-ref }}'
 
       - name: 'Set up python'
         id: python
@@ -120,16 +154,18 @@ jobs:
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
         with:
-          requirements: 'requirements-dev.txt'
+          python-version: '3.9'
+          python-requirements-file: 'requirements-dev.txt'
 
-  dynamic_application_security_testing:
+  dynamic-application-security-testing:
 
     name: 'Dynamic Application Security Testing (DAST)'
-    runs-on: ubuntu-latest
 
     permissions:
       contents: read
       actions: read
+
+    runs-on: ubuntu-latest
 
     steps:
 
@@ -137,45 +173,46 @@ jobs:
         id: setup
         run: |
           echo "::set-output name=repository::$( echo "${{ github.repository }}" )"
-          echo "::set-output name=repository_owner::$( echo "${{ github.repository_owner }}" )"
-          echo "::set-output name=repository_name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
-          echo "::set-output name=branch_name::$( echo "${{ github.ref_name }}" )"
-          echo "::set-output name=branch_ref::$( echo "${{ github.ref }}" )"
+          echo "::set-output name=repository-owner::$( echo "${{ github.repository_owner }}" )"
+          echo "::set-output name=repository-name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
+          echo "::set-output name=branch-name::$( echo "${{ github.ref_name }}" )"
+          echo "::set-output name=branch-ref::$( echo "${{ github.ref }}" )"
         shell: bash
 
       - name: 'Check out repository'
         id: checkout
         uses: actions/checkout@v3
         with:
-          ref: '${{ steps.setup.outputs.branch_ref }}'
+          ref: '${{ steps.setup.outputs.branch-ref }}'
 
       - name: 'Get build version'
         id: versioning
         uses: ./.github/actions/get-build-version
         with:
-          file: '__init__.py'
+          python-versioning-file: 'valifn/__init__.py'
 
       - name: 'Build docker image'
         id: docker
         uses: ./.github/actions/build-docker-image
         with:
-          name: '${{ steps.setup.outputs.repository }}'
-          tag: '${{ steps.versioning.outputs.version }}'
+          docker-image-name: '${{ steps.setup.outputs.repository }}'
+          docker-image-tag: '${{ steps.versioning.outputs.build-version }}'
           dockerfile: 'Dockerfile'
-          archive: '${{ steps.setup.outputs.repository_name }}-docker.tar.gz'
+          archive-name: '${{ steps.setup.outputs.repository-name }}-docker.tar.gz'
 
   report:
 
     name: 'Report'
-    runs-on: ubuntu-latest
 
-    needs: [static_application_security_testing, unit_testing, dynamic_application_security_testing]
+    needs: [static-application-security-testing, unit-testing, dynamic-application-security-testing]
 
-    if: ${{ always() }}
+    if: ${{ success() || failure() }}
 
     permissions:
       contents: read
       actions: read
+
+    runs-on: ubuntu-latest
 
     steps:
 
@@ -183,10 +220,10 @@ jobs:
         id: setup
         run: |
           echo "::set-output name=repository::$( echo "${{ github.repository }}" )"
-          echo "::set-output name=repository_owner::$( echo "${{ github.repository_owner }}" )"
-          echo "::set-output name=repository_name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
-          echo "::set-output name=branch_name::$( echo "${{ github.ref_name }}" )"
-          echo "::set-output name=branch_ref::$( echo "${{ github.ref }}" )"
+          echo "::set-output name=repository-owner::$( echo "${{ github.repository_owner }}" )"
+          echo "::set-output name=repository-name::$( echo "${{ github.repository }}" | sed --regexp-extended --expression 's|${{ github.repository_owner }}\/||g' )"
+          echo "::set-output name=branch-name::$( echo "${{ github.ref_name }}" )"
+          echo "::set-output name=branch-ref::$( echo "${{ github.ref }}" )"
           echo "::set-output name=channel::$( echo "#development" )"
         shell: bash
 
@@ -194,13 +231,13 @@ jobs:
         id: checkout
         uses: actions/checkout@v3
         with:
-          ref: '${{ steps.setup.outputs.branch_ref }}'
+          ref: '${{ steps.setup.outputs.branch-ref }}'
 
       - name: 'Get build version'
         id: versioning
         uses: ./.github/actions/get-build-version
         with:
-          file: '__init__.py'
+          python-versioning-file: 'valifn/__init__.py'
 
       - name: 'Get workflow status'
         id: workflow
@@ -220,6 +257,6 @@ jobs:
           cancelled_text: '[*CANCELLED*] <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.workflow }} (${{ steps.setup.outputs.repository }})>'
           fields: |
             [
-               { "title": "Version", "value": "${{ steps.versioning.outputs.version }}", "short": true }
-              ,{ "title":  "Branch", "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ steps.setup.outputs.branch_name }}>", "short": true }
+               { "title": "Version", "value": "${{ steps.versioning.outputs.build-version }}", "short": true }
+              ,{ "title":  "Branch", "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ steps.setup.outputs.branch-name }}>", "short": true }
             ]
