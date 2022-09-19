@@ -1,10 +1,24 @@
 name: 'Set up python'
 description: 'Set up GitHub Actions workflow with a version of Python configured with Valispace settings'
 inputs:
-  requirements:
-    description: 'Path to the python requirements file'
-    required: true
+  python-version:
+    description: "Version range or exact version of Python to use, using SemVer's version range syntax"
+    required: false
+    default: '3.9'
+  python-requirements-file:
+    description: "Path to the python requirements file"
+    required: false
     default: 'requirements-dev.txt'
+outputs:
+  python-path:
+    description: "The absolute path to the Python executable"
+    value: '${{ steps.python.outputs.python-path }}'
+  python-version:
+    description: "The installed and configured Python version"
+    value: '${{ steps.python.outputs.python-version }}'
+  cache-hit:
+    description: "A boolean value to indicate a cache entry was found"
+    value: '${{ steps.python.outputs.cache-hit }}'
 runs:
   using: composite
   steps:
@@ -12,12 +26,12 @@ runs:
       uses: actions/setup-python@v4
       with:
         token: '${{ env.GITHUB_TOKEN }}'
-        python-version: '3.9'
+        python-version: '${{ inputs.python-version }}'
         cache: 'pip'
-        cache-dependency-path: '${{ inputs.requirements }}'
+        cache-dependency-path: '${{ inputs.python-requirements-file }}'
     - id: libxmlsec1-dev
-      run: sudo apt-get update && sudo apt-get --assume-yes install pkg-config libxmlsec1-dev
+      run: sudo apt-get --quiet update && sudo apt-get --quiet --no-install-recommends --assume-yes install pkg-config libxmlsec1-dev
       shell: bash
     - id: requirements
-      run: pip install --exists-action w --requirement "${{ inputs.requirements }}"
+      run: pip install --exists-action w --requirement "${{ inputs.python-requirements-file }}"
       shell: bash
