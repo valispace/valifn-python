@@ -63,6 +63,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 media/
+static/
 
 # Flask stuff:
 instance/
@@ -127,7 +128,6 @@ dmypy.json
 
 local.py
 result.json
-
 
 # -----------------------------------------------------------------------------
 # SYSTEM
