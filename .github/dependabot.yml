@@ -24,6 +24,8 @@ updates:
       interval: "daily"
     ignore:
       - dependency-name: "pyparsing"
-        versions: [">=3.x"] # pint needs version bellow 3 or above 2
+        versions: [">2.x"] # cannot update further without breaking integration with pint
+      - dependency-name: "pylint"
+        versions: [">2.14.x"] # cannot update further without breaking integration with pylint-django-2.5.3
     reviewers:
       - "valispace/fn"
