@@ -6,14 +6,17 @@ LABEL maintainer="Valispace DevOps <devops@valispace.com>"
 ENV PYTHONUNBUFFERED=1 \
     DJANGO_SETTINGS_MODULE="settings.docker"
 
-# Copy the application source code to docker image
+ARG DEBIAN_FRONTEND=noninteractive \
+    APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
+
+# Copy the application source code to docker image and install dependencies
 COPY ./ /valifn
 WORKDIR /valifn
 
-# Install latest pip and it's requirements
 RUN set -e && \
+    # Install python dependencies for the application
     pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir --requirement requirements.txt
 
 # No need to track logs because container is constantly
 # destroyed after each execution or failure
