@@ -1,23 +1,74 @@
-FROM python:3.10-slim
+FROM python:3.10-slim-buster
 
+LABEL org.opencontainers.image.description "Python docker image to be used by ValiFN"
 LABEL maintainer="Valispace DevOps <devops@valispace.com>"
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1 \
-    DJANGO_SETTINGS_MODULE="settings.docker"
+# Activate unattended package installation with default answers for all questions
+ENV DEBIAN_FRONTEND="noninteractive"
+# Suppress apt-key warning about standard out not being a terminal (use in this script is safe)
+ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE="DontWarn"
+# Suppress pip warning about running as root user (use in this script is safe)
+ENV PIP_ROOT_USER_ACTION="ignore"
+# Make sure all python messages always reach the console
+ENV PYTHONUNBUFFERED=1
 
-ARG DEBIAN_FRONTEND=noninteractive \
-    APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
+# Copy application source code to docker image
+COPY ./ /opt/valispace/valifn
 
-# Copy the application source code to docker image and install dependencies
-COPY ./ /valifn
-WORKDIR /valifn
+# Use bash as shell
+SHELL [ "/bin/bash", "-c" ]
 
-RUN set -e && \
-    # Install python dependencies for the application
-    pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir --requirement requirements.txt
+# Stop execution immediately when a command fails
+RUN set -e
+
+# Install some apt packages
+RUN \
+    apt-get --quiet update && \
+    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install apt-utils 2>&1 | grep -v "debconf: delaying package configuration, since apt-utils is not installed" && \
+    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install apt-transport-https
+# Install some utils packages for later debugging
+RUN \
+    apt-get --quiet update && \
+    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install nano vim git gnupg2 gcc htop procps redis-tools
+# Install some network tools
+RUN \
+    apt-get --quiet update && \
+    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install wget curl ca-certificates software-properties-common
+# Cleanup caches and unnecessary files
+RUN \
+    apt-get --quiet --assume-yes autoremove && \
+    apt-get --quiet autoclean && \
+    rm --force --recursive /var/cache/apt/* && \
+    rm --force --recursive /var/lib/apt/lists/*
+# Create logs folders
+RUN \
+    mkdir --parents /var/log/valispace/valifn
+
+# Create 'valispace' user (non-root)
+RUN \
+    useradd --create-home --home-dir /home/valispace --shell /bin/bash --password "$( openssl passwd -1 valispace )" valispace
+
+# Set the application owner
+RUN \
+    chown --quiet --recursive valispace:valispace /opt/valispace/valifn && \
+    chown --quiet --recursive valispace:valispace /var/log/valispace/valifn
+
+# Set the default user
+USER valispace
+
+# Set working directory
+WORKDIR /home/valispace
+
+# Create a python virtual environment
+RUN \
+    python -m venv .venv
+
+# Install python dependencies for the application
+RUN \
+    source .venv/bin/activate && \
+    pip --require-virtualenv --no-input --exists-action w install --upgrade pip wheel && \
+    pip --require-virtualenv --no-input --exists-action w install --requirement /opt/valispace/valifn/requirements.txt
 
 # No need to track logs because container is constantly
 # destroyed after each execution or failure
-CMD ["tail", "-f", "/dev/null"]
+CMD ["tail", "--follow", "/dev/null"]
