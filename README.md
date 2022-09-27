@@ -1,8 +1,8 @@
-# ValiFn Python Image &middot; [![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=plastic&label=code%20style)](https://github.com/psf/black) [![code quality: pylint](https://img.shields.io/badge/code%20quality-pylint-yellowgreen?style=plastic&label=code%20quality)](https://github.com/PyCQA/pylint) [![code security: bandit](https://img.shields.io/badge/code%20security-bandit-yellow.svg?style=plastic&label=code%20security)](https://github.com/PyCQA/bandit) [![continuous integration](https://github.com/valispace/valifn-python/actions/workflows/continuous_integration.yml/badge.svg?style=plastic&label=continuous%20integration&branch=develop)](https://github.com/valispace/valifn-python/actions/workflows/continuous_integration.yml)
+# ValiFN Python Image &middot; [![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=plastic&label=code%20style)](https://github.com/psf/black) [![code quality: pylint](https://img.shields.io/badge/code%20quality-pylint-yellowgreen?style=plastic&label=code%20quality)](https://github.com/PyCQA/pylint) [![code security: bandit](https://img.shields.io/badge/code%20security-bandit-yellow.svg?style=plastic&label=code%20security)](https://github.com/PyCQA/bandit) [![continuous integration](https://github.com/valispace/valifn-python/actions/workflows/continuous_integration.yml/badge.svg?style=plastic&label=continuous%20integration&branch=develop)](https://github.com/valispace/valifn-python/actions/workflows/continuous_integration.yml)
 
-ValiFn provides a way to connect and run scripts from [Valispace](https://github.com/valispace) in a safe and isolated environment.
+ValiFN provides a way to connect and run scripts from [Valispace](https://github.com/valispace) in a safe and isolated environment.
 
-This repository contains code to generate a `python image` to be used by ValiFn.
+This repository contains code to generate a `python image` to be used by ValiFN.
 You can add and remove requirements at your will, build the image and replace the original image provided by [Valispace](https://github.com/valispace) using the following instructions.
 
 ## How to install new image
