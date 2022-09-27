@@ -29,11 +29,11 @@ RUN \
 # Install some utils packages for later debugging
 RUN \
     apt-get --quiet update && \
-    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install nano vim git gnupg2 gcc htop procps redis-tools
+    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install vim htop procps redis-tools
 # Install some network tools
 RUN \
     apt-get --quiet update && \
-    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install wget curl ca-certificates software-properties-common
+    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install wget ca-certificates software-properties-common
 # Cleanup caches and unnecessary files
 RUN \
     apt-get --quiet --assume-yes autoremove && \
