@@ -1,0 +1,7 @@
+### Requirements (documentation) (alphabetical order)
+graphviz==0.20.1                                # Simple Python interface for Graphviz
+rstcheck==6.1.0                                 # Checks syntax of reStructuredText and code blocks nested within it
+Sphinx==5.2.2                                   # Python documentation generator
+sphinx-automodapi==0.14.1                       # Sphinx extension for auto-generating API documentation for entire modules
+sphinxcontrib-plantuml==0.24                    # Sphinx "plantuml" extension
+sphinx_rtd_theme==1.0.0                         # Read the Docs theme for Sphinx
