@@ -21,19 +21,6 @@ SHELL [ "/bin/bash", "-c" ]
 # Stop execution immediately when a command fails
 RUN set -e
 
-# Install some apt packages
-RUN \
-    apt-get --quiet update && \
-    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install apt-utils 2>&1 | grep -v "debconf: delaying package configuration, since apt-utils is not installed" && \
-    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install apt-transport-https
-# Install some utils packages for later debugging
-RUN \
-    apt-get --quiet update && \
-    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install vim htop procps redis-tools
-# Install some network tools
-RUN \
-    apt-get --quiet update && \
-    apt-get --quiet --no-install-recommends --fix-broken --assume-yes install wget ca-certificates software-properties-common
 # Cleanup caches and unnecessary files
 RUN \
     apt-get --quiet --assume-yes autoremove && \
