@@ -21,40 +21,32 @@ SHELL [ "/bin/bash", "-c" ]
 # Stop execution immediately when a command fails
 RUN set -e
 
-# Cleanup caches and unnecessary files
-RUN \
-    apt-get --quiet --assume-yes autoremove && \
-    apt-get --quiet autoclean && \
-    rm --force --recursive /var/cache/apt/* && \
-    rm --force --recursive /var/lib/apt/lists/*
-# Create logs folders
-RUN \
-    mkdir --parents /var/log/valispace/valifn
+# Create application log
+RUN mkdir --parents /var/log/valispace/valifn
+
+# Install application dependencies (apt-get)
+# Install application dependencies (pip)
+RUN pip --no-input --exists-action w install --upgrade pip wheel setuptools
+RUN pip --no-input --exists-action w install --requirement /opt/valispace/valifn/requirements.txt
+
+# Cleanup caches (apt-get)
+RUN apt-get --quiet --assume-yes autoremove && apt-get --quiet autoclean && rm --force --recursive /var/lib/apt/lists/* && rm --force --recursive /var/cache/apt/*
+# Cleanup caches (pip)
+RUN pip cache purge
 
 # Create 'valispace' user (non-root)
-RUN \
-    useradd --create-home --home-dir /home/valispace --shell /bin/bash --password "$( openssl passwd -1 valispace )" valispace
+RUN useradd --create-home --home-dir /home/valispace --shell /bin/bash --password "$( openssl passwd -1 valispace )" valispace
 
-# Set the application owner
-RUN \
-    chown --quiet --recursive valispace:valispace /opt/valispace/valifn && \
-    chown --quiet --recursive valispace:valispace /var/log/valispace/valifn
+# Set application owner
+RUN chown --quiet --recursive valispace:valispace /opt/valispace/valifn
+# Set application log owner
+RUN chown --quiet --recursive valispace:valispace /var/log/valispace/valifn
 
-# Set the default user
+# Set default user
 USER valispace
 
 # Set working directory
 WORKDIR /home/valispace
-
-# Create a python virtual environment
-RUN \
-    python -m venv .venv
-
-# Install python dependencies for the application
-RUN \
-    source .venv/bin/activate && \
-    pip --require-virtualenv --no-input --exists-action w install --upgrade pip wheel && \
-    pip --require-virtualenv --no-input --exists-action w install --requirement /opt/valispace/valifn/requirements.txt
 
 # No need to track logs because container is constantly
 # destroyed after each execution or failure
