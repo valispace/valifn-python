@@ -27,7 +27,7 @@ my_new_package==0.0.1
 
 3. Build docker image with tag `valispace/valifn-python:latest`
 ```
-$ docker build . --tag valispace/valifn-python:latest
+$ docker build --compress --tag valispace/valifn-python:latest .
 ```
 
 NOTE: If you build the image on your deployment server, you can ignore steps 4, 5 and 6.
