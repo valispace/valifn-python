@@ -2,17 +2,17 @@
 
 ValiFN provides a way to connect and run scripts from [Valispace](https://github.com/valispace) in a safe and isolated environment.
 
-This repository contains code to generate a `python image` to be used by ValiFN.
-You can add and remove requirements at your will, build the image and replace the original image provided by [Valispace](https://github.com/valispace) using the following instructions.
+This repository contains code to generate a `python` image to be used by ValiFN.
+You can add and remove requirements at your will and then build the image and replace the original image provided by [Valispace](https://github.com/valispace) using the following instructions:
 
-## How to install new image
+## How to install a new image
 
-1. Clone repository
+1. Clone the repository
 ```
 $ git clone https://github.com/valispace/valifn-python.git
 ```
 
-2. Add/remove packages `requirements.txt`
+2. Add/remove packages to `requirements.txt`
 ```
 # Valispace packages
 valispace>=0.1.16   # Valispace API
@@ -27,10 +27,10 @@ my_new_package==0.0.1
 
 3. Build docker image with tag `valispace/valifn-python:latest`
 ```
-$ docker build . -t valispace/valifn-python:latest
+$ docker build . --tag valispace/valifn-python:latest
 ```
 
-NOTE: If you build image on your deployment server, you can ignore steps 4, 5 and 6.
+NOTE: If you build the image on your deployment server, you can ignore steps 4, 5 and 6.
 
 4. Save image to a file
 ```
@@ -41,10 +41,10 @@ $ docker save valispace/valifn-python:latest | gzip > valifn-python.tar.gz
 
 6. Load image to docker
 ```
-$ docker load -i valifn-python.tar.gz
+$ docker load --input valifn-python.tar.gz
 ```
 
-7. Thats it! You have now replaced ValiFn Python Image to match your needs on your deployment. No restart is needed.
+7. That's it! You have now replaced ValiFN Python Image to match your needs on your deployment. No restart is needed.
 
 
 ## Documentation
