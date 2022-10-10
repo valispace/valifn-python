@@ -3,6 +3,7 @@
 ValiFN provides a way to connect and run scripts from [Valispace](https://github.com/valispace) in a safe and isolated environment.
 
 This repository contains code to generate a `python` image to be used by ValiFN.
+
 You can add and remove requirements at your will and then build the image and replace the original image provided by [Valispace](https://github.com/valispace) using the following instructions:
 
 ## How to install a new image
@@ -45,16 +46,6 @@ $ docker load --input valifn-python.tar.gz
 ```
 
 7. That's it! You have now replaced ValiFN Python Image to match your needs on your deployment. No restart is needed.
-
-
-## Documentation
-
-See the [Wiki](https://github.com/valispace/valifn-python/wiki) for details on project setup and usage, as also technical details.
-
-
-## Changelog
-
-Detailed changes for each release are documented in the [release notes](https://github.com/valispace/valifn-python/releases).
 
 
 ## Copyright
