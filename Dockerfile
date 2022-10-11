@@ -34,20 +34,6 @@ RUN apt-get --quiet --assume-yes autoremove && apt-get --quiet autoclean && rm -
 # Cleanup caches (pip)
 RUN pip cache purge
 
-# Create 'valispace' user (non-root)
-RUN useradd --create-home --home-dir /home/valispace --shell /bin/bash --password "$( openssl passwd -1 valispace )" valispace
-
-# Set application owner
-RUN chown --quiet --recursive valispace:valispace /opt/valispace/valifn
-# Set application log owner
-RUN chown --quiet --recursive valispace:valispace /var/log/valispace/valifn
-
-# Set default user
-USER valispace
-
-# Set working directory
-WORKDIR /home/valispace
-
 # No need to track logs because container is constantly
 # destroyed after each execution or failure
 CMD ["tail", "--follow", "/dev/null"]
