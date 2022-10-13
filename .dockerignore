@@ -41,10 +41,15 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Lint
+.pylintrc
+
 # Unit test / coverage reports
 htmlcov/
+locust/
 .tox/
 .nox/
+.coveragerc
 .coverage
 .coverage.*
 .cache
@@ -53,6 +58,8 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+pytest.ini
+sonar-project.properties
 
 # Translations
 *.mo
@@ -72,7 +79,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+docs/
 
 # PyBuilder
 target/
@@ -120,14 +127,32 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Requirements
+requirements-dev.txt
+
+
+# -----------------------------------------------------------------------------
+# DOCKER
+# -----------------------------------------------------------------------------
+
+docker/Dockerfile
+.dockerignore
+
+
+# -----------------------------------------------------------------------------
+# GITHUB
+# -----------------------------------------------------------------------------
+
+.github
+
 
 # -----------------------------------------------------------------------------
 # LOCAL CONFIGURATIONS & SETTINGS
 # -----------------------------------------------------------------------------
 
-local.py
-result.json
-
+settings/local.py
+README.md
+LICENSE
 
 # -----------------------------------------------------------------------------
 # SYSTEM
@@ -165,3 +190,7 @@ nginx_signing*
 *.sock
 *.sock.lock
 *.bk
+
+# Git
+.git/
+.gitignore
