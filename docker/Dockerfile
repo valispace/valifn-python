@@ -34,6 +34,9 @@ RUN apt-get --quiet --assume-yes autoremove && apt-get --quiet autoclean && rm -
 # Cleanup caches (pip)
 RUN pip cache purge
 
+# Set working dir (necessary for relative paths)
+WORKDIR /opt/valispace/valifn
+
 # No need to track logs because container is constantly
 # destroyed after each execution or failure
 CMD ["tail", "--follow", "/dev/null"]
