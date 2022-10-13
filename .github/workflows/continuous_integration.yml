@@ -197,7 +197,7 @@ jobs:
         with:
           docker-image-name: '${{ steps.setup.outputs.repository }}'
           docker-image-tag: '${{ steps.versioning.outputs.build-version }}'
-          dockerfile: 'Dockerfile'
+          dockerfile: 'docker/Dockerfile'
           archive-name: '${{ steps.setup.outputs.repository-name }}-docker.tar.gz'
 
   report:
