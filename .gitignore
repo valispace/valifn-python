@@ -156,6 +156,7 @@ result.json
 
 # System Files
 .DS_Store
+**/*.out
 Thumbs.db
 *.icloud
 thumbnail_kvstore*
