@@ -3,4 +3,4 @@ valispace==0.1.16   # Valispace API
 
 # Basic scientifical packages
 pint==0.18          # Python library used for scientific
-scipy==1.7.3        # Python library to define, operate and manipulate physical quantities
+scipy==1.9.3        # Python library to define, operate and manipulate physical quantities
