@@ -1,12 +1,70 @@
 # -----------------------------------------------------------------------------
-# BACKEND - DJANGO / PYTHON
+# SYSTEM
+# -----------------------------------------------------------------------------
+
+.DS_Store
+.vagrant/
+Thumbs.db
+*.icloud
+thumbnail_kvstore*
+octave-workspace
+.bash_history
+file_watcher.pid
+nginx_signing*
+*.sock
+*.sock.lock
+pip*.txt
+pylint_result.txt
+*.bk
+
+# -----------------------------------------------------------------------------
+# KEYS & TEMPORARY FILES
+# -----------------------------------------------------------------------------
+
+*.pem
+*.pub
+configs/vault/
+configs/aws/*/compose.temp.yml
+configs/aws/*/aws-credentials.json
+configs/aws/*/db.sql
+configs/aws/*/db.creds.json
+configs/aws/*/dns-add-record.json
+configs/aws/*/dns-delete-record.json
+
+# -----------------------------------------------------------------------------
+# IDEs and Editors
+# -----------------------------------------------------------------------------
+
+.DS_Store
+.c9/
+.classpath
+.idea/
+.history/
+.mr.developer.cfg
+.project
+.pydevproject
+.settings/
+*.chproj
+*.launch
+*.sublime-*
+*.sublime-workspace
+
+# VS code
+.vscode/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+
+# -----------------------------------------------------------------------------
+# Python / Django / Jupyter
 # -----------------------------------------------------------------------------
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-.pytest_cache
 
 # C extensions
 *.so
@@ -41,35 +99,73 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
 # Translations
 *.mo
 *.pot
 
-# Django stuff:
+# Environments
+ENV/
+env/
+env.bak/
+env_*/
+env3/
+venv/
+venv.bak/
+.env/
+.venv/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mypy
+mypyls/
+.mypy_cache/
+dmypy.json
+.dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Physical quantities module (Valispace version)
+src/pint
+
+# Personal configurations
+local.py
+result.json
+
+# Django stuff
+*.box
 *.log
+*.pyc
+*.pyo
+bower_components/
+configs/vault/
+deployment_*.py
+dump.rdb
+nohup.out
+octave-core
+parser.out
+parsetab.py
+personal_data/
+/backups
+/mod_wsgi-4.4.21/*
+/postgres-data
+/redis-stable
 local_settings.py
 db.sqlite3
 media/
 static/
+staticfiles/
 
-# Flask stuff:
+# Flask stuff
 instance/
 .webassets-cache
 
-# Scrapy stuff:
+# Scrapy stuff
 .scrapy
 
 # Sphinx documentation
@@ -79,7 +175,8 @@ docs/_build/
 target/
 
 # Jupyter Notebook
-.ipynb_checkpoints
+.ipynb_checkpoints/
+*.ipynb
 
 # IPython
 profile_default/
@@ -94,74 +191,43 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
+# Test file
+xyz.py
 
 # -----------------------------------------------------------------------------
-# PERSONAL CONFIGURATIONS
+# GIT / NPM
 # -----------------------------------------------------------------------------
 
-local.py
-result.json
+.npmrc
 
 # -----------------------------------------------------------------------------
-# SYSTEM
+# TESTING / COVERAGE
 # -----------------------------------------------------------------------------
 
-# IDEs and editors
-.idea/
-.vscode/
-.project
-.pydevproject
-.mr.developer.cfg
-.classpath
-.c9/
-*.launch
-.settings/
-*.chproj
-*.sublime-*
-*.sublime-workspace
-.DS_Store
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history
+htmlcov/
+.tox/
+.nox/
+coverage/
+coverage.xml
+.coverage
+.coverage.*
+*.cover
+.cache
+nosetests.xml
+.hypothesis/
+.pytest_cache/
+.pytest-queries
+.scannerwork/
 
-# System Files
-.DS_Store
-Thumbs.db
-*.icloud
-thumbnail_kvstore*
-octave-workspace
-.bash_history
-nginx_signing*
-*.sock
-*.sock.lock
-*.bk
+# -----------------------------------------------------------------------------
+# Docker
+# -----------------------------------------------------------------------------
+docker-compose.override.yml
+docker-compose.local.yml
+local.yml
+
+# -----------------------------------------------------------------------------
+# Stress Testing
+# -----------------------------------------------------------------------------
+stress_test/*.conf
+stress_test/results/*
