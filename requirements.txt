@@ -15,6 +15,6 @@ docx2python==2.0.4
 python-docx==0.8.11
 Pillow==9.3.0
 htmldocx==0.0.6
-pip-system-certs==3.1
+pip-system-certs==3.6
 Pandas==1.5.1
 numpy==1.23.4
