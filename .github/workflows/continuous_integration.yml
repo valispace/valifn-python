@@ -241,7 +241,7 @@ jobs:
 
       - name: 'Get workflow status'
         id: workflow
-        uses: martialonline/workflow-status@v3
+        uses: martialonline/workflow-status@v4
 
       - name: Notify channel '#${{ steps.setup.outputs.channel }}'
         id: notify
