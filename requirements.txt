@@ -17,4 +17,4 @@ Pillow==9.3.0
 htmldocx==0.0.6
 pip-system-certs==3.1
 Pandas==1.5.2
-numpy==1.23.5
+numpy==1.24.0
