@@ -11,7 +11,7 @@ openpyxl==3.0.10
 xlrd==1.2.0
 natsort==8.2.0
 docx-mailmerge2==0.6.2
-docx2python==2.0.4
+docx2python==2.0.5
 python-docx==0.8.11
 Pillow==9.3.0
 htmldocx==0.0.6
