@@ -20,7 +20,7 @@ jobs:
 
       - name: 'Check stale issues'
         id: stale
-        uses: actions/stale@v6
+        uses: actions/stale@v7
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-issue-message: 'Issue is stale and will be closed in 14 days unless there is new activity (hint: add stale-exempt label to keep it opened)'
