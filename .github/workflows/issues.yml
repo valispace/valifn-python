@@ -20,9 +20,9 @@ jobs:
 
     steps:
 
-      - name: 'Process dependabot issues'
-        id: dependabot
-        # TODO: close dependabot issues for hotfix updates with ONE approval
+      # - name: 'Process dependabot issues'
+      #   id: dependabot
+      #   # TODO: close dependabot issues for hotfix updates with ONE approval
 
       - name: 'Process stale issues'
         id: stale
