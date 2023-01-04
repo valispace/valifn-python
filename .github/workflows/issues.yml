@@ -1,9 +1,13 @@
 name: 'Issues'
 
+concurrency:
+  group: 'issues-${{ github.repository_id }}'
+  cancel-in-progress: true  # Allow only one concurrent workflow
+
 on:
 
   schedule:
-    - cron: '15 1 * * 1-5'  # At minute 15 past hour 1 on every day-of-week from Monday through Friday
+    - cron: '15 1 * * 1-5'  # Run this workflow at minute 15 past hour 1 on every day-of-week from Monday through Friday
 
 jobs:
 
