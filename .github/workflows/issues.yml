@@ -12,9 +12,9 @@ on:
 jobs:
 
   # Process all open Issues
-  issues:
+  process_issues:
 
-    name: 'Issues'
+    name: 'Process Issues'
     runs-on: ubuntu-latest
 
     # Set GITHUB_TOKEN required permissions
