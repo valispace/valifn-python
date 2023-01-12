@@ -98,6 +98,7 @@ disable=raw-checker-failed,
         attribute-defined-outside-init,
         signature-differs,
         #imported-auth-user,
+        no-else-return  # an else-return is more readable
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
