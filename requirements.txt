@@ -6,7 +6,7 @@ pint==0.20.1        # Python library used for scientific
 scipy==1.9.3        # Python library to define, operate and manipulate physical quantities
 
 # Add other packages here
-requests==2.28.1
+requests==2.28.2
 openpyxl==3.0.10
 xlrd==1.2.0
 natsort==8.2.0
