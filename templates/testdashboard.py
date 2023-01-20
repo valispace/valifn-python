@@ -1,0 +1,68 @@
+import csv, json
+from valispace import API
+
+import warnings
+import os
+import urllib.request
+
+from ast import Str
+from collections.abc import Callable
+from xmlrpc.client import Boolean
+
+VALISPACE = {
+    'domain': 'https://.valispace.com/',
+    'username': '',
+    'password': ''
+}
+
+DEFAULT_VALUES = {
+    "project": 24, 
+}
+
+def get_map(api: API, endpoint: Str = "/", name: Str = "id", name_map_func: Callable[[Str], Boolean] = None, filter_func: Callable[[Str], Boolean]= None):
+    """
+    Function that given an endpoint returns a dict with specific keys.
+    If function is provided it generates the key. name_map_func must receive an object instance.
+    Otherwise key will be the property of each object specified in name.
+    """
+    mapping = {}
+    if not name_map_func:
+        name_map_func = lambda x: x[name]
+    for inst in api.get(endpoint):
+        if filter_func and not filter_func(inst):
+            # Filtered out
+            continue
+
+        key = name_map_func(inst)
+        if not mapping.get(key):
+            mapping[key] = inst
+        else:
+            warnings.warn(f"Warning ---> Key: {key} already has an object. Some data may be lost in mapping.")
+    return mapping
+
+def main(**kwargs):
+
+    api = API(
+            url = VALISPACE.get('domain'),
+            username = VALISPACE.get('username'),
+            password = VALISPACE.get('password')
+        )
+    
+    all_project_test_runs = get_map(api, f"testing/test-runs/?project="+str(DEFAULT_VALUES["project"]), "id")
+
+    pass_runs = 0
+    failed_runs = 0
+
+    for run in all_project_test_runs:
+        if all_project_test_runs[run]['status'] == 50:
+            pass_runs += 1
+        elif all_project_test_runs[run]['status'] == 40:
+            failed_runs += 1
+
+    api.request('patch', "dashboards/blocks/blocktext/12/", {"text": "Number of Passed Test Runs ->  "+ str(pass_runs) + "<p>new line</p>"})    
+    api.request('patch', "dashboards/blocks/blocktext/13/", {"text": "Number of Failed Test Runs ->  "+ str(failed_runs)})
+    #api.request('patch', "dashboards/blocks/blocktext/97/", {"text": "Number of Failed Test Runs ->  "+ str(failed_runs)})  
+    pass
+
+if __name__=='__main__':
+    main()
