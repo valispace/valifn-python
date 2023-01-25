@@ -2,12 +2,10 @@
 
 This repository serves as the base to generate a `python` Docker image, that will allow the Valispace Scripting Module to execute `python` code in a safe and isolated Docker container.
 
-You can clone this repository, add your requirements, build the Docker image and then use it in [Valispace](https://github.com/valispace).
-
 
 ## Documentation
 
-See the [Wiki](https://github.com/valispace/valifn-python/wiki) for details on project setup and usage, as also technical documentation.
+See the [Wiki](https://github.com/valispace/valifn-python/wiki) for details on usage, templates and troubleshooting
 
 
 ## Changelog
