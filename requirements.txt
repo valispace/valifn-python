@@ -1,11 +1,11 @@
-# Valispace packages
-valispace==0.1.16   # Valispace API
+# Valispace packages (mandatory)
+valispace==0.1.16 # Valispace Python API
 
-# Basic scientifical packages
-pint==0.20.1        # Python library used for scientific
-scipy==1.9.3        # Python library to define, operate and manipulate physical quantities
+# Basic scientifical packages (mandatory)
+git+https://git@github.com/valispace/pint.git@0.21.dev0+valispace#egg=pint # Physical quantities module (Valispace version)
+scipy==1.9.3 # Fundamental algorithms for scientific computing in Python
 
-# Add other packages here
+# Add your packages here (optional)
 requests==2.28.2
 openpyxl==3.0.10
 xlrd==1.2.0
