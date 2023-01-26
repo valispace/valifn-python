@@ -5,7 +5,7 @@ This repository serves as the base to generate a `python` Docker image, that wil
 
 ## Documentation
 
-See the [Wiki](https://github.com/valispace/valifn-python/wiki) for details on usage, templates and troubleshooting
+See the [Wiki](https://github.com/valispace/valifn-python/wiki) for details on usage, templates and troubleshooting.
 
 
 ## Changelog
