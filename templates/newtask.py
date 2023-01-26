@@ -1,12 +1,29 @@
+#!/usr/bin/env python
+
+"""
+    Posts a task assigned to user who triggered it
+    Should assign object that triggered it
+    Functionality not fully developed.
+"""
+
+__author__ = "Gonçalo Ivo"
+__copyright__ = "Copyright 2022, Valispace"
+__credits__ = ["Gonçalo Ivo"]
+__license__ = "GPL"
+__version__ = "1.0"
+__maintainer__ = "Valispace"
+__email__ = "support@valispace.com"
+__status__ = "Development"
+
 from valispace import API
 from datetime import datetime, timedelta
 
 
 
 VALISPACE = {
-    'domain': 'https://demonstration.valispace.com/',
-    'username': 'AutomationsAPI',
-    'password': 'AutomationsAPI'
+    'domain': 'https://.valispace.com/',
+    'username': '',
+    'password': ''
 }
 
 DEFAULT_VALUES = {
