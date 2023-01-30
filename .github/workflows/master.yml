@@ -34,9 +34,6 @@ jobs:
 
     needs: [build]
 
-    # Only release artifacts to Valispace repository
-    if: ${{ (github.repository_owner == 'valispace') }}
-
     # Set GITHUB_TOKEN required permissions
     permissions:
       contents: write
