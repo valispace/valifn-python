@@ -1,0 +1,138 @@
+name: 'Builder'
+
+on:
+
+  workflow_call:
+    inputs:
+      branch-name:
+        description: 'Branch where the workflow was triggered'
+        required: true
+        default: ''
+        type: string
+      update-major-version:
+        description: 'Update major version'
+        required: false
+        default: false
+        type: boolean
+      update-minor-version:
+        description: 'Update minor version'
+        required: false
+        default: false
+        type: boolean
+      update-patch-version:
+        description: 'Update patch version'
+        required: false
+        default: false
+        type: boolean
+      pre-release-type:
+        description: 'Pre-release type (only `alpha`, `release-candidate` or `` are allowed)'
+        required: false
+        default: 'NaN'
+        type: string
+    outputs:
+      release:
+        description: 'The current release version (e.g. `x.y`)'
+        value: '${{ jobs.build.outputs.release }}'
+      version:
+        description: 'The current build version (e.g. `x.y.z(-(alpha|release-candidate)-(epoch))?`)'
+        value: '${{ jobs.build.outputs.version }}'
+      pre-release-type:
+        description: 'The current pre-release type (if defined) (e.g. `alpha`, `release-candidate`, ``)'
+        value: '${{ jobs.build.outputs.pre-release-type }}'
+      pre-release-metadata:
+        description: 'The current pre-release metadata (if defined) (e.g. `alpha-1692107243`, `release-candidate-1692112160`, ``)'
+        value: '${{ jobs.build.outputs.pre-release-metadata }}'
+
+jobs:
+
+  # Build and upload artifacts
+  build:
+
+    outputs:
+      release: '${{ steps.versioning.outputs.release }}'
+      version: '${{ steps.versioning.outputs.version }}'
+      pre-release-type: '${{ steps.versioning.outputs.pre-release-type }}'
+      pre-release-metadata: '${{ steps.versioning.outputs.pre-release-metadata }}'
+
+    runs-on: ubuntu-latest
+
+    # Set GITHUB_TOKEN required permissions
+    permissions:
+      contents: write
+      actions: write
+      packages: write
+
+    steps:
+
+      - name: 'Set up steps'
+        id: setup
+        run: |
+          echo "repository=$( echo "${{ github.repository }}" )" >> $GITHUB_OUTPUT
+          echo "repository_owner=$( echo "${{ github.repository_owner }}" )" >> $GITHUB_OUTPUT
+          echo "repository_name=$( echo "${{ github.event.repository.name }}" )" >> $GITHUB_OUTPUT
+          echo "branch_name=$( echo "${{ inputs.branch-name }}" )" >> $GITHUB_OUTPUT
+          echo "branch_ref=$( echo "refs/heads/${{ inputs.branch-name }}" )" >> $GITHUB_OUTPUT
+          echo "update_major_version=$( echo "${{ inputs.update-major-version }}" )" >> $GITHUB_OUTPUT
+          echo "update_minor_version=$( echo "${{ inputs.update-minor-version }}" )" >> $GITHUB_OUTPUT
+          echo "update_patch_version=$( echo "${{ inputs.update-patch-version }}" )" >> $GITHUB_OUTPUT
+          echo "pre_release_type=$( echo "${{ inputs.pre-release-type }}" )" >> $GITHUB_OUTPUT
+          echo "pre_release_metadata=$( if [[ ("${{ inputs.pre-release-type }}" == "NaN") ]]; then echo "NaN"; elif [[ ("${{ inputs.pre-release-type }}" == "") ]]; then echo ""; else echo "${{ inputs.pre-release-type }}-$( date +%s )"; fi )" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: 'Check out repository'
+        id: checkout
+        uses: actions/checkout@v3
+        with:
+          ref: '${{ steps.setup.outputs.branch_ref }}'
+
+      - name: 'Bump build version'
+        id: bump-build-version
+        if: ${{ (inputs.update-major-version == 'true') || (inputs.update-minor-version == 'true') || (inputs.update-patch-version == 'true') || (inputs.pre-release-type != 'NaN') }}
+        uses: valispace/actions/bump-build-version@master
+        with:
+          versioning-file: '__init__.py'
+          update-major-version: ${{ steps.setup.outputs.update_major_version }}
+          update-minor-version: ${{ steps.setup.outputs.update_minor_version }}
+          update-patch-version: ${{ steps.setup.outputs.update_patch_version }}
+          pre-release-metadata: '${{ steps.setup.outputs.pre_release_metadata }}'
+
+      - name: 'Get build version'
+        id: versioning
+        uses: valispace/actions/get-build-version@master
+        with:
+          versioning-file: '__init__.py'
+
+      - name: 'Commit changes'
+        id: commit-changes
+        if: ${{ (inputs.update-major-version == 'true') || (inputs.update-minor-version == 'true') || (inputs.update-patch-version == 'true') || (inputs.pre-release-type != 'NaN') }}
+        uses: valispace/actions/commit-changes@master
+        with:
+          protected-branch-token: '${{ secrets.REPO_ADMIN_TOKEN }}'
+          repository-owner: '${{ steps.setup.outputs.repository_owner }}'
+          repository-name: '${{ steps.setup.outputs.repository_name }}'
+          branch-name: '${{ steps.setup.outputs.branch_name }}'
+          commit-author: 'github_actions'
+          commit-message: '${{ steps.setup.outputs.repository_name }} build ${{ steps.versioning.outputs.version }}'
+
+      - name: 'Build docker image'
+        id: docker-build-image
+        uses: valispace/actions/docker-build-image@master
+        with:
+          dockerfile: 'Dockerfile'
+          archive-name: '${{ steps.setup.outputs.repository_name }}-docker.tar.gz'
+          labels: 'version=${{ steps.versioning.outputs.version }}'
+          tags: |
+            ${{ steps.setup.outputs.repository }}:${{ steps.versioning.outputs.version }}
+            ${{ steps.setup.outputs.repository }}:latest
+
+      - name: 'Push docker image to Docker Hub'
+        id: docker-push-image
+        uses: valispace/actions/docker-push-image@master
+        with:
+          dockerfile: 'Dockerfile'
+          registry: 'ghcr.io'
+          username: '${{ steps.setup.outputs.repository_owner }}'
+          password: '${{ secrets.GITHUB_TOKEN }}'
+          labels: 'version=${{ steps.versioning.outputs.version }}'
+          tags: |
+            ghcr.io/${{ steps.setup.outputs.repository }}:${{ steps.setup.outputs.branch_name }}
