@@ -12,7 +12,7 @@ See the [Wiki](https://github.com/valispace/valifn-python/wiki) for details on s
 
 [Valispace](https://github.com/valispace) follows the Semantic Versioning Specification (SemVer) defined at [Semantic Versioning.org](https://semver.org/), adapted for our own context.
 
-In short, we name our versions as `major.minor.patch(-(alpha|release-candidate)+(epoch))?`.
+In short, we name our versions as `major.minor.patch(-(alpha|release-candidate)-<epoch>)?`.
 
 
 ## Changelog
