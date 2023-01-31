@@ -1,47 +1,18 @@
-# ValiFn Python Image
+# Valispace Python Image &middot; [![license](https://img.shields.io/github/license/valispace/valifn-python?style=plastic)](LICENSE) [![release](https://img.shields.io/github/v/release/valispace/valifn-python?include_prereleases&style=plastic)](https://github.com/valispace/valifn-python/releases) [![issues](https://img.shields.io/github/issues/valispace/valifn-python?style=plastic)](https://github.com/valispace/valifn-python/issues) [![pull requests](https://img.shields.io/github/issues-pr/valispace/valifn-python?style=plastic)](https://github.com/valispace/valifn-python/pulls)
 
-ValiFn provides a way to connect and run scripts from Valispace in a safe and isolated environment.
+This repository serves as the base to generate a `python` Docker image, that will allow the Valispace Scripting Module to execute `python` code in a safe and isolated Docker container.
 
-This repository contains code to generate a `python image` to be used by ValiFn.
-You can add and remove requirements at your will, build the image and replace the original image provided by Valispace using the following instructions.
 
-## How to install new image
+## Documentation
 
-1. Clone repository
-```
-$ git clone https://github.com/valispace/valifn-python.git
-```
+See the [Wiki](https://github.com/valispace/valifn-python/wiki) for details on usage, templates and troubleshooting.
 
-2. Add/remove packages `requirements.txt`
-```
-# Valispace packages
-valispace>=0.1.16   # Valispace API
 
-# Basic scientifical packages
-pint>=0.18          # Python library used for scientific
-scipy>=1.7.3        # Python library to define, operate and manipulate physical quantities
+## Changelog
 
-# Add other packages here
-my_new_package==0.0.1
-```
+Detailed changes for each release are documented in the [release notes](https://github.com/valispace/valifn-python/releases).
 
-3. Build docker image with tag `valispace/valifn-python:latest`
-```
-$ docker build . -t valispace/valifn-python:latest
-```
 
-NOTE: If you build image on your deployment server, you can ignore steps 4, 5 and 6.
+## Copyright
 
-4. Save image to a file
-```
-$ docker save valispace/valifn-python:latest | gzip > valifn-python.tar.gz
-```
-
-5. Copy `valifn-python.tar.gz` to your destination
-
-6. Load image to docker
-```
-$ docker load -i valifn-python.tar.gz
-```
-
-7. Thats it! You have now replaced ValiFn Python Image to match your needs on your deployment. No restart is needed.
+Copyright &copy; 2015-present, [Valispace GmbH](https://www.valispace.com/about-us/)

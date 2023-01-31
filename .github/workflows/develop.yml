@@ -1,0 +1,31 @@
+name: 'Develop'
+
+concurrency:
+  group: 'develop-${{ github.repository_owner }}-${{ github.event.repository.name }}'
+  cancel-in-progress: true  # Allow only one concurrent workflow
+
+on:
+
+  pull_request:
+    branches: [staging]
+    types: [closed]
+
+jobs:
+
+  # Build and upload artifacts
+  build:
+
+    name: 'Build and Upload Artifacts'
+
+    # The current version was promoted to release candidate (staging) 
+    if: ${{ github.event.pull_request.merged && (github.event.pull_request.head.ref == 'develop') }}
+
+    secrets: inherit
+
+    uses: ./.github/workflows/builder.yml
+    with:
+      branch-name: 'develop'
+      update-major-version: false
+      update-minor-version: true
+      update-patch-version: false
+      pre-release-type: 'alpha'

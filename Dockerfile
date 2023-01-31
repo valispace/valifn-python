@@ -6,14 +6,23 @@ LABEL maintainer="Valispace DevOps <devops@valispace.com>"
 ENV PYTHONUNBUFFERED=1 \
     DJANGO_SETTINGS_MODULE="settings.docker"
 
-# Copy the application source code to docker image
+ARG DEBIAN_FRONTEND=noninteractive \
+    APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
+
+# Copy the application source code to docker image and install dependencies
 COPY ./ /valifn
 WORKDIR /valifn
 
-# Install latest pip and it's requirements
 RUN set -e && \
+    # Install apt-utils
+    apt-get --quiet update && \
+    apt-get --quiet --no-install-recommends --assume-yes install apt-utils 2>&1 | grep -v "debconf: delaying package configuration, since apt-utils is not installed" && \
+    # Install git
+    apt-get --quiet update && \
+    apt-get --quiet --no-install-recommends --assume-yes install git && \
+    # Install python dependencies for the application
     pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir --requirement requirements.txt
 
 # No need to track logs because container is constantly
 # destroyed after each execution or failure

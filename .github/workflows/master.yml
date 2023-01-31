@@ -1,0 +1,50 @@
+name: 'Release'
+
+concurrency:
+  group: 'master-${{ github.repository_owner }}-${{ github.event.repository.name }}'
+  cancel-in-progress: true  # Allow only one concurrent workflow
+
+on:
+
+  push:
+    branches: [master]
+
+jobs:
+
+  # Build and upload artifacts
+  build:
+
+    name: 'Build and Upload Artifacts'
+
+    secrets: inherit
+
+    uses: ./.github/workflows/builder.yml
+    with:
+      branch-name: '${{ github.ref_name }}'
+      update-major-version: false
+      update-minor-version: false
+      update-patch-version: ${{ contains(github.event.head_commit.message, 'HOTFIX') }}
+      pre-release-type: ''  # clear pre-release metadata (final release)
+
+  # Tag and release artifacts
+  release:
+
+    name: 'Tag and Release Artifacts'
+    runs-on: ubuntu-latest
+
+    needs: [build]
+
+    # Set GITHUB_TOKEN required permissions
+    permissions:
+      contents: write
+      actions: read
+
+    steps:
+
+      - name: 'Create new release in GitHub'
+        id: release
+        uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
+          commit: '${{ github.ref }}'
+          tag: '${{ needs.build.outputs.version }}'

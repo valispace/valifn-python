@@ -1,0 +1,31 @@
+version: 2
+updates:
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "valispace/automations"
+
+  # Maintain dependencies for Docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "valispace/operations"
+
+  # Maintain dependencies for Python
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "pyparsing"
+        versions: [">2.x"] # cannot update further without breaking integration with pint
+      - dependency-name: "pylint"
+        versions: [">2.14.x"] # cannot update further without breaking integration with pylint-django-2.5.3
+    reviewers:
+      - "valispace/fn"
