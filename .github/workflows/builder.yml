@@ -116,6 +116,7 @@ jobs:
 
       - name: 'Build docker image'
         id: docker-build-image
+        if: ${{ (steps.setup.outputs.branch_name == 'master') }}
         uses: valispace/actions/docker-build-image@master
         with:
           dockerfile: 'Dockerfile'
