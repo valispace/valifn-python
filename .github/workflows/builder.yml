@@ -116,6 +116,7 @@ jobs:
 
       - name: 'Build docker image'
         id: docker-build-image
+        if: ${{ (steps.setup.outputs.branch_name == 'master') }}
         uses: valispace/actions/docker-build-image@master
         with:
           dockerfile: 'Dockerfile'
@@ -127,12 +128,14 @@ jobs:
 
       - name: 'Push docker image to Docker Hub'
         id: docker-push-image
+        if: ${{ (steps.setup.outputs.branch_name == 'master') }}
         uses: valispace/actions/docker-push-image@master
         with:
           dockerfile: 'Dockerfile'
-          registry: 'ghcr.io'
-          username: '${{ steps.setup.outputs.repository_owner }}'
-          password: '${{ secrets.GITHUB_TOKEN }}'
+          registry: ''
+          username: '${{ secrets.DOCKERHUB_USERNAME }}'
+          password: '${{ secrets.DOCKERHUB_TOKEN }}'
           labels: 'version=${{ steps.versioning.outputs.version }}'
           tags: |
-            ghcr.io/${{ steps.setup.outputs.repository }}:${{ steps.setup.outputs.branch_name }}
+            ${{ steps.setup.outputs.repository }}:${{ steps.versioning.outputs.version }}
+            ${{ steps.setup.outputs.repository }}:latest
