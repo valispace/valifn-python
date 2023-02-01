@@ -6,6 +6,9 @@ concurrency:
 
 on:
 
+  push:
+    branches: [develop]
+
   pull_request:
     branches: [staging]
     types: [closed]
@@ -17,15 +20,12 @@ jobs:
 
     name: 'Build and Upload Artifacts'
 
-    # The current version was promoted to release candidate (staging) 
-    if: ${{ github.event.pull_request.merged && (github.event.pull_request.head.ref == 'develop') }}
-
     secrets: inherit
 
     uses: ./.github/workflows/builder.yml
     with:
       branch-name: 'develop'
       update-major-version: false
-      update-minor-version: true
+      update-minor-version: ${{ (github.event_name == 'pull_request') && github.event.pull_request.merged && (github.event.pull_request.head.ref == 'develop') }}  # The current version was promoted to release candidate (staging) 
       update-patch-version: false
       pre-release-type: 'alpha'
