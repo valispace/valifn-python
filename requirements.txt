@@ -35,3 +35,5 @@ jira # provides access to Jira tickets
 
 openpyxl # reading Excel files
 xlsxwriter # writing Excel files
+
+xacro4sdf #tool to define and parse XML macro for sdf format files
