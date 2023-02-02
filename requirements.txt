@@ -18,3 +18,20 @@ htmldocx==0.0.6
 pip-system-certs==3.1
 Pandas==1.5.1
 numpy==1.23.4
+
+# export_specification_to_document
+docxtpl
+
+# get_active_valispace_users
+bs4
+
+# add_slackers
+slack_sdk
+
+deepdiff # compares dictionaries together
+more-itertools # provides loop in batches through ichunked
+
+jira # provides access to Jira tickets
+
+openpyxl # reading Excel files
+xlsxwriter # writing Excel files
