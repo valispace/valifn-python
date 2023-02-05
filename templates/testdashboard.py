@@ -1,3 +1,20 @@
+#!/usr/bin/env python
+
+"""
+    Can take input from automation or be triggered manually
+    Returns string placed on predefined Dashboard 
+    text blocks with calculated test run statistics.
+"""
+
+__author__ = "Gonçalo Ivo"
+__copyright__ = "Copyright 2022, Valispace"
+__credits__ = ["Gonçalo Ivo"]
+__license__ = "GPL"
+__version__ = "1.0"
+__maintainer__ = "Valispace"
+__email__ = "support@valispace.com"
+__status__ = "Development"
+
 import csv, json
 from valispace import API
 
