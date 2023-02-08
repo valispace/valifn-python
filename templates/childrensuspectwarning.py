@@ -15,12 +15,17 @@ __maintainer__ = "Valispace"
 __email__ = "support@valispace.com"
 __status__ = "Development"
 
-from ast import Str
-from collections.abc import Callable
-from xmlrpc.client import Boolean
+# Standard packages
 from valispace import API
 import warnings
 import time
+import site
+site.addsitedir('script_code/') # Required to import other files in script
+
+# Installed packages
+from ast import Str
+from collections.abc import Callable
+from xmlrpc.client import Boolean
 
 VALISPACE = {
     'domain': 'https://.valispace.com/',

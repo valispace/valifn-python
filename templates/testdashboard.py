@@ -15,12 +15,15 @@ __maintainer__ = "Valispace"
 __email__ = "support@valispace.com"
 __status__ = "Development"
 
+# Standard packages
 import csv, json
 from valispace import API
 
 import warnings
 import os
 import urllib.request
+import site
+site.addsitedir('script_code/') # Required to import other files in script
 
 from ast import Str
 from collections.abc import Callable
