@@ -11,7 +11,7 @@ ARG DEBIAN_FRONTEND=noninteractive \
 
 # Copy the application source code to docker image and install dependencies
 COPY ./ /valifn
-WORKDIR /valifn
+WORKDIR /valifn/backend
 
 RUN set -e && \
     # Install apt-utils
@@ -22,7 +22,7 @@ RUN set -e && \
     apt-get --quiet --no-install-recommends --assume-yes install git && \
     # Install python dependencies for the application
     pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir --requirement backend/requirements.txt
+    pip install --no-cache-dir --requirement requirements.txt
 
 # No need to track logs because container is constantly
 # destroyed after each execution or failure

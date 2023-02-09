@@ -2,7 +2,7 @@ import argparse
 import json
 import traceback
 
-from encoders import JSONEncoder
+from valifn.encoders import JSONEncoder
 from pathlib import Path
 
 
@@ -17,7 +17,7 @@ def run_script(**kwargs) -> str:
     :rtype: str
     """
     # Parse arguments from calling script (expected data as JSON)
-    parser = argparse.ArgumentParser(description="Call script with specific data and return url")
+    parser = argparse.ArgumentParser(description="Call script with specific data and return URL")
     parser.add_argument("data", type=str, default=dict(), help="Data with kwargs to execute script as JSON")
     args = parser.parse_args()
     data = json.loads(args.data)
@@ -25,9 +25,9 @@ def run_script(**kwargs) -> str:
     try:
         # Execute script
         # --------------------------------------------------
-        # NOTE: Import code from here to be capture and send back
+        # NOTE: Import code from here to be captured and sent back
         # as an error in case it fails or file does not exist
-        from script_code.main import main
+        from valifn.script_code.main import main
 
         result = json.dumps(main(**data) or {}, cls=JSONEncoder)
 
