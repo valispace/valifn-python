@@ -11,7 +11,7 @@ ARG DEBIAN_FRONTEND=noninteractive \
 
 # Copy the application source code to docker image and install dependencies
 COPY ./ /valifn
-WORKDIR /valifn
+WORKDIR /valifn/backend
 
 RUN set -e && \
     # Install apt-utils
