@@ -14,14 +14,17 @@ __maintainer__ = "Valispace"
 __email__ = "support@valispace.com"
 __status__ = "Development"
 
+# Standard modules
 from valispace import API
 from datetime import datetime, timedelta
 import time
+import site
+site.addsitedir('script_code/') # Required to import other files in script
 
 VALISPACE = {
-    'domain': 'https://demonstration.valispace.com/',
-    'username': 'AutomationsAPI',
-    'password': 'AutomationsAPI'
+    'domain': 'https://.valispace.com/',
+    'username': '',
+    'password': ''
 }
 
 DEFAULT_VALUES = {

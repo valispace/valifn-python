@@ -15,8 +15,11 @@ __maintainer__ = "Valispace"
 __email__ = "support@valispace.com"
 __status__ = "Development"
 
+# Standard packages
 from valispace import API
 from datetime import datetime, timedelta
+import site
+site.addsitedir('script_code/') # Required to import other files in script
 
 
 

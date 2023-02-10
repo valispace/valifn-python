@@ -22,6 +22,8 @@ import warnings
 import os
 import urllib.request
 import time
+import site
+site.addsitedir('script_code/') # Required to import other files in script
 
 from ast import Str
 from collections.abc import Callable

@@ -15,13 +15,17 @@ __maintainer__ = "Valispace"
 __email__ = "support@valispace.com"
 __status__ = "Development"
 
+# Standard packages
 from typing import Any, Dict
 import operator
 import warnings
 import os #used for running in desktop IDE
 import getpass #used for running in desktop IDE
 import requests
+import site
+site.addsitedir('script_code/') # Required to import other files in script
 
+# Installed packages
 from ast import Str
 from collections.abc import Callable
 from xmlrpc.client import Boolean
