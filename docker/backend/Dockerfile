@@ -2,6 +2,7 @@ FROM python:3.10-slim-buster
 
 LABEL org.opencontainers.image.description "Python docker image to be used by the Valispace Scripting Module"
 LABEL maintainer="Valispace DevOps <devops@valispace.com>"
+LABEL version="0.0.0"
 
 # Activate unattended package installation with default answers for all questions
 ENV DEBIAN_FRONTEND="noninteractive"
