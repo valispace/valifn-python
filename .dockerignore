@@ -1,167 +1,236 @@
 # -----------------------------------------------------------------------------
-# BACKEND - DJANGO / PYTHON
+# SYSTEM
 # -----------------------------------------------------------------------------
 
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-.pytest_cache
+**/.bash_history
+**/.DS_Store
+**/Thumbs.db
 
-# C extensions
-*.so
+# -----------------------------------------------------------------------------
+# KEYS & TEMPORARY FILES
+# -----------------------------------------------------------------------------
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+**/configs/aws/*/aws-credentials.json
+**/configs/aws/*/compose.temp.yml
+**/configs/aws/*/db.creds.json
+**/configs/aws/*/db.sql
+**/configs/aws/*/dns-add-record.json
+**/configs/aws/*/dns-delete-record.json
+**/configs/vault/
+**/*.pem
+**/*.pub
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+# -----------------------------------------------------------------------------
+# IDEs and EDITORS
+# -----------------------------------------------------------------------------
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+**/.c9/
+**/.history
+**/.idea/
+**/.settings/
+**/.classpath
+**/.project
+**/.mr.developer.cfg
+**/.pydevproject
+**/*.chproj
+**/*.launch
+**/*.sublime-*
+**/*.sublime-workspace
+**/.vscode/
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
+# -----------------------------------------------------------------------------
+# ENVIRONMENTS
+# -----------------------------------------------------------------------------
 
-# Translations
-*.mo
-*.pot
+**/ENV/
+**/env/
+**/env.bak/
+**/env_*/
+**/env3/
+**/venv/
+**/venv.bak/
+**/.env/
+**/.venv/
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-media/
+# -----------------------------------------------------------------------------
+# GIT
+# -----------------------------------------------------------------------------
 
-# Flask stuff:
-instance/
-.webassets-cache
+**/.git/
+**/.gitignore
 
-# Scrapy stuff:
-.scrapy
+# -----------------------------------------------------------------------------
+# GITHUB
+# -----------------------------------------------------------------------------
 
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# celery beat schedule file
-celerybeat-schedule
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
+**/.github/
 
 # -----------------------------------------------------------------------------
 # LOCAL CONFIGURATIONS & SETTINGS
 # -----------------------------------------------------------------------------
 
-local.py
-result.json
-
+**/settings/local.py
+**/README.md
+**/LICENSE
+**/.exclude
 
 # -----------------------------------------------------------------------------
-# SYSTEM
+# DOCKER
 # -----------------------------------------------------------------------------
 
-# IDEs and editors
-.idea/
-.vscode/
-.project
-.pydevproject
-.mr.developer.cfg
-.classpath
-.c9/
-*.launch
-.settings/
-*.chproj
-*.sublime-*
-*.sublime-workspace
-.DS_Store
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history
+**/docker-compose.override.yml
+**/docker-compose.local.yml
+**/local.yml
 
-# System Files
-.DS_Store
-Thumbs.db
-*.icloud
-thumbnail_kvstore*
-octave-workspace
-.bash_history
-nginx_signing*
-*.sock
-*.sock.lock
-*.bk
+# -----------------------------------------------------------------------------
+# BACKEND - DJANGO / PYTHON
+# -----------------------------------------------------------------------------
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/.pytest_cache
+
+# C extensions
+**/*.so
+
+# Distribution / packaging
+**/.Python
+**/build/
+**/develop-eggs/
+**/dist/
+**/downloads/
+**/eggs/
+**/.eggs/
+**/lib/
+**/lib64/
+**/parts/
+**/sdist/
+**/var/
+**/wheels/
+**/share/python-wheels/
+**/*.egg-info/
+**/.installed.cfg
+**/*.egg
+**/MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+
+**/*.manifest
+**/*.spec
+
+# Installer logs
+**/pip-log.txt
+**/pip-delete-this-directory.txt
+
+# Lint
+**/.pylintrc
+
+# Unit test / coverage reports
+**/htmlcov/
+**/locust/
+**/.tox/
+**/.nox/
+**/coverage/
+**/.coveragerc
+**/.coverage
+**/.coverage.*
+**/coverage.xml
+**/*.cover
+**/.cache/
+**/nosetests.xml
+**/.hypothesis/
+**/.pytest_cache/
+**/.pytest-queries
+**/pyproject.toml
+**/pytest.ini
+**/sonar-project.properties
+**/.scannerwork/
+
+# Translations
+**/*.mo
+**/*.pot
+
+# Django stuff:
+**/*.log
+**/local_settings.py
+**/db.sqlite3
+**/media/
+**/*.box
+**/*.pyc
+**/*.pyo
+**/bower_components/
+**/configs/vault/
+**/deployment_*.py
+**/dump.rdb
+**/nohup.out
+**/octave-core
+**/parser.out
+**/parsetab.py
+**/personal_data/
+**/backups
+**/mod_wsgi-4.4.21/*
+**/postgres-data
+**/redis-stable
+**/static/
+**/staticfiles/
+
+# Flask stuff:
+**/instance/
+**/.webassets-cache/
+
+# Scrapy stuff:
+**/.scrapy
+
+# Sphinx documentation
+**/docs/
+**/_build
+**/_autosummary
+
+# PyBuilder
+**/target/
+
+# Jupyter Notebook
+**/.ipynb_checkpoints
+**/*.ipynb
+
+# IPython
+**/profile_default/
+**/ipython_config.py
+
+# pyenv
+**/.python-version
+
+# celery beat schedule file
+**/celerybeat-schedule
+
+# SageMath parsed files
+**/*.sage.py
+
+# Spyder project settings
+**/.spyderproject
+**/.spyproject
+
+# Rope project settings
+**/.ropeproject
+
+# mkdocs documentation
+**/site
+
+# mypy
+**/mypyls/
+**/.mypy_cache/
+**/.dmypy.json
+**/dmypy.json
+
+# Pyre type checker
+**/.pyre
+
+# pyenv
+**/.python-version
+
+# Requirements
+**/requirements-*.txt
