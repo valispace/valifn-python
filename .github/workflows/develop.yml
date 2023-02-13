@@ -8,6 +8,16 @@ on:
 
   push:
     branches: [develop]
+    paths:
+      - 'docker'
+      - 'backend'
+      - '!backend/docs'
+      - '!backend/locust'
+      - '!backend/scripts'
+      - '!backend/.exclude'
+      - '!backend/.gitignore'
+      - '!backend/pyproject.toml'
+      - '!backend/requirements-*.txt'
 
   pull_request:
     branches: [staging]
@@ -21,6 +31,8 @@ jobs:
     name: 'Build and Upload Artifacts'
 
     secrets: inherit
+
+    if: ${{ (github.event_name == 'push') || ((github.event_name == 'pull_request') && (github.event.pull_request.head.ref == 'develop') && github.event.pull_request.merged) }}
 
     uses: ./.github/workflows/builder.yml
     with:
