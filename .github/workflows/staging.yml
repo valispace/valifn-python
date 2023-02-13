@@ -8,6 +8,16 @@ on:
 
   push:
     branches: [staging]
+    paths:
+      - 'docker'
+      - 'backend'
+      - '!backend/docs'
+      - '!backend/locust'
+      - '!backend/scripts'
+      - '!backend/.exclude'
+      - '!backend/.gitignore'
+      - '!backend/pyproject.toml'
+      - '!backend/requirements-*.txt'
 
 jobs:
 
