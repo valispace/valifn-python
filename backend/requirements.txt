@@ -7,7 +7,7 @@ scipy==1.9.3 # Fundamental algorithms for scientific computing in Python
 
 # Add your packages here (optional)
 requests==2.28.2
-openpyxl==3.0.10
+openpyxl==3.1.0
 xlrd==1.2.0
 natsort==8.2.0
 docx-mailmerge2==0.6.2

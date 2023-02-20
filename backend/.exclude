@@ -1,0 +1,11 @@
+# files and directories to exclude from the tarball
+.exclude
+.pytest_cache
+__pycache__
+docs
+locust
+db.sqlite3
+pyproject.toml
+requirements-*.txt
+sonar-project.properties
+*.log

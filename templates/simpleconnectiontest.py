@@ -1,11 +1,30 @@
+#!/usr/bin/env python
+
+"""
+    Test API connection to Valispace, holds for determined amount of time
+    Returns run date.
+"""
+
+__author__ = "Gonçalo Ivo"
+__copyright__ = "Copyright 2022, Valispace"
+__credits__ = ["Gonçalo Ivo"]
+__license__ = "GPL"
+__version__ = "1.0"
+__maintainer__ = "Valispace"
+__email__ = "support@valispace.com"
+__status__ = "Development"
+
+# Standard modules
 from valispace import API
 from datetime import datetime, timedelta
 import time
+import site
+site.addsitedir('script_code/') # Required to import other files in script
 
 VALISPACE = {
-    'domain': 'https://demonstration.valispace.com/',
-    'username': 'AutomationsAPI',
-    'password': 'AutomationsAPI'
+    'domain': 'https://.valispace.com/',
+    'username': '',
+    'password': ''
 }
 
 DEFAULT_VALUES = {

@@ -90,7 +90,7 @@ jobs:
         if: ${{ (inputs.update-major-version == 'true') || (inputs.update-minor-version == 'true') || (inputs.update-patch-version == 'true') || (inputs.pre-release-type != 'NaN') }}
         uses: valispace/actions/bump-build-version@master
         with:
-          versioning-file: '__init__.py'
+          versioning-file: 'backend/valifn/__init__.py'
           update-major-version: ${{ steps.setup.outputs.update_major_version }}
           update-minor-version: ${{ steps.setup.outputs.update_minor_version }}
           update-patch-version: ${{ steps.setup.outputs.update_patch_version }}
@@ -100,7 +100,7 @@ jobs:
         id: versioning
         uses: valispace/actions/get-build-version@master
         with:
-          versioning-file: '__init__.py'
+          versioning-file: 'backend/valifn/__init__.py'
 
       - name: 'Commit changes'
         id: commit-changes
@@ -119,7 +119,7 @@ jobs:
         if: ${{ (steps.setup.outputs.branch_name == 'master') }}
         uses: valispace/actions/docker-build-image@master
         with:
-          dockerfile: 'Dockerfile'
+          dockerfile: 'docker/backend/Dockerfile'
           archive-name: '${{ steps.setup.outputs.repository_name }}-docker.tar.gz'
           labels: 'version=${{ steps.versioning.outputs.version }}'
           tags: |
@@ -131,7 +131,7 @@ jobs:
         if: ${{ (steps.setup.outputs.branch_name == 'master') }}
         uses: valispace/actions/docker-push-image@master
         with:
-          dockerfile: 'Dockerfile'
+          dockerfile: 'docker/backend/Dockerfile'
           registry: ''
           username: '${{ secrets.DOCKERHUB_USERNAME }}'
           password: '${{ secrets.DOCKERHUB_TOKEN }}'

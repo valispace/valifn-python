@@ -1,14 +1,36 @@
-from ast import Str
-from collections.abc import Callable
-from xmlrpc.client import Boolean
+#!/usr/bin/env python
+
+"""
+    Takes input from automation that triggers it.
+    Automation is triggered by updating a requirement
+    Posts discussions to that requirement's children.    
+"""
+
+__author__ = "Gonçalo Ivo"
+__copyright__ = "Copyright 2022, Valispace"
+__credits__ = ["Gonçalo Ivo"]
+__license__ = "GPL"
+__version__ = "1.0"
+__maintainer__ = "Valispace"
+__email__ = "support@valispace.com"
+__status__ = "Development"
+
+# Standard packages
 from valispace import API
 import warnings
 import time
+import site
+site.addsitedir('script_code/') # Required to import other files in script
+
+# Installed packages
+from ast import Str
+from collections.abc import Callable
+from xmlrpc.client import Boolean
 
 VALISPACE = {
-    'domain': 'https://demonstration.valispace.com/',
-    'username': 'AutomationsAPI',
-    'password': 'AutomationsAPI'
+    'domain': 'https://.valispace.com/',
+    'username': '',
+    'password': ''
 }
 
 DEFAULT_VALUES = {

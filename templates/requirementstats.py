@@ -1,3 +1,20 @@
+#!/usr/bin/env python
+
+"""
+    Builds overal requirement stats
+    for single project on deployment
+    Patches pre-created Valis with results.
+"""
+
+__author__ = "Gonçalo Ivo"
+__copyright__ = "Copyright 2022, Valispace"
+__credits__ = ["Gonçalo Ivo"]
+__license__ = "GPL"
+__version__ = "1.0"
+__maintainer__ = "Valispace"
+__email__ = "support@valispace.com"
+__status__ = "Development"
+
 import csv, json
 from valispace import API
 
@@ -5,15 +22,17 @@ import warnings
 import os
 import urllib.request
 import time
+import site
+site.addsitedir('script_code/') # Required to import other files in script
 
 from ast import Str
 from collections.abc import Callable
 from xmlrpc.client import Boolean
 
 VALISPACE = {
-    'domain': 'https://demonstration.valispace.com/',
-    'username': 'AutomationsAPI',
-    'password': 'AutomationsAPI'
+    'domain': 'https://.valispace.com/',
+    'username': '',
+    'password': ''
 }
 
 DEFAULT_VALUES = {
@@ -51,19 +70,21 @@ def main(**kwargs):
     
     all_project_requirements = get_map(api, f"requirements/complete/?project="+str(DEFAULT_VALUES["project"]), "id")
 
-    nr_reqs = 0 #15093
-    nr_req_w_children = 0 #15094
-    nr_req_w_vm = 0 #15095
-    nr_req_vm_analysis = 0 #15099
-    nr_req_vm_review = 0 #15100
-    nr_req_vm_inspection = 0 #15101
-    nr_req_vm_rules = 0 #15102
-    nr_req_vm_tests = 0 #15103
-    nr_req_state_draft = 0 #15096
-    nr_req_state_in_review = 0 #15097
-    nr_req_state_final = 0 #15098
-    nr_req_verified = 0 #15104
-    nr_req_not_verified = 0 #15105
+    # initiate variables
+
+    nr_reqs = 0
+    nr_req_w_children = 0
+    nr_req_w_vm = 0
+    nr_req_vm_analysis = 0
+    nr_req_vm_review = 0
+    nr_req_vm_inspection = 0
+    nr_req_vm_rules = 0
+    nr_req_vm_tests = 0
+    nr_req_state_draft = 0
+    nr_req_state_in_review = 0
+    nr_req_state_final = 0
+    nr_req_verified = 0
+    nr_req_not_verified = 0
 
     nr_reqs = len(all_project_requirements)
 
@@ -104,19 +125,21 @@ def main(**kwargs):
     print("going to patch")
     time.sleep(15)
 
-    api.request("patch", "valis/15093/", data={"formula":nr_reqs})
-    api.request("patch", "valis/15094/", data={"formula":nr_req_w_children})
-    api.request("patch", "valis/15095/", data={"formula":nr_req_w_vm})    
-    api.request("patch", "valis/15096/", data={"formula":nr_req_state_draft})
-    api.request("patch", "valis/15097/", data={"formula":nr_req_state_in_review})
-    api.request("patch", "valis/15098/", data={"formula":nr_req_state_final})    
-    api.request("patch", "valis/15099/", data={"formula":nr_req_vm_analysis})
-    api.request("patch", "valis/15100/", data={"formula":nr_req_vm_review})
-    api.request("patch", "valis/15101/", data={"formula":nr_req_vm_inspection})
-    api.request("patch", "valis/15102/", data={"formula":nr_req_vm_rules})
-    api.request("patch", "valis/15103/", data={"formula":nr_req_vm_tests})
-    api.request("patch", "valis/15104/", data={"formula":nr_req_verified})
-    api.request("patch", "valis/15105/", data={"formula":nr_req_not_verified})
+    
+
+    api.request("patch", "valis/12813/", data={"formula":nr_reqs})
+    api.request("patch", "valis/12814/", data={"formula":nr_req_w_children})
+    api.request("patch", "valis/12815/", data={"formula":nr_req_w_vm})    
+    api.request("patch", "valis/12816/", data={"formula":nr_req_state_draft})
+    api.request("patch", "valis/12817/", data={"formula":nr_req_state_in_review})
+    api.request("patch", "valis/12818/", data={"formula":nr_req_state_final})    
+    api.request("patch", "valis/12819/", data={"formula":nr_req_vm_analysis})
+    api.request("patch", "valis/12820/", data={"formula":nr_req_vm_review})
+    api.request("patch", "valis/12821/", data={"formula":nr_req_vm_inspection})
+    api.request("patch", "valis/12822/", data={"formula":nr_req_vm_rules})
+    api.request("patch", "valis/12823/", data={"formula":nr_req_vm_tests})
+    api.request("patch", "valis/12824/", data={"formula":nr_req_verified})
+    api.request("patch", "valis/12825/", data={"formula":nr_req_not_verified})
 
     pass
 

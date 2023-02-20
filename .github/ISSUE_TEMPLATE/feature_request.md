@@ -2,19 +2,22 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: ''
-assignees: ''
+labels: 'feature'
+assignees: '@valispace/fn'
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+### Motivation
+<!-- A clear and concise description of what the motivation for the new feature is, and what problem it is solving. -->
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+### Proposed Solution
+<!-- A clear and concise description of the feature you would like to add, and how it solves the motivating problem. -->
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+
+### Alternatives
+<!-- A clear and concise description of any alternative solutions or features you've considered, and why you're proposed solution is better. -->
+
+
+### Additional Context
+<!-- Add any other information or screenshots about the feature request here. -->

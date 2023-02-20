@@ -1,10 +1,31 @@
+#!/usr/bin/env python
+
+"""
+    Takes Word file as Template from given deployment
+    Returns output generated files, as many as there are specifications, placed in deployment's Files Management.
+    Instructions: https://docs.valispace.com/vhd/specification-export-based-on-microsoft-word-templ
+"""
+
+__author__ = "Gonçalo Ivo"
+__copyright__ = "Copyright 2022, Valispace"
+__credits__ = ["Gonçalo Ivo"]
+__license__ = "GPL"
+__version__ = "1.0"
+__maintainer__ = "Valispace"
+__email__ = "support@valispace.com"
+__status__ = "Development"
+
+# Standard packages
 from typing import Any, Dict
 import operator
 import warnings
-import os
-import getpass
+import os #used for running in desktop IDE
+import getpass #used for running in desktop IDE
 import requests
+import site
+site.addsitedir('script_code/') # Required to import other files in script
 
+# Installed packages
 from ast import Str
 from collections.abc import Callable
 from xmlrpc.client import Boolean
@@ -21,7 +42,7 @@ import urllib.request
 
 from htmldocx import HtmlToDocx
 
-#TEMPLATE_FILES_DIRECROTY = os.environ['USERPROFILE']+'/Documents/Generic Specification Template.docx' 
+#TEMPLATE_FILES_DIRECROTY = os.environ['USERPROFILE']+'/Documents/Generic Specification Template.docx' #used for running in desktop IDE 
 
 CURRENT_SPECIFICATION = {
     "id": 0,
@@ -30,13 +51,13 @@ CURRENT_SPECIFICATION = {
 }
 
 VALISPACE = {
-    'domain': 'https://demonstration.valispace.com/',
-    'username': 'AutomationsAPI',
-    'password': 'AutomationsAPI'
+    'domain': 'https://.valispace.com/',
+    'username': '',
+    'password': ''
 }
 
 DEFAULT_VALUES = {
-    "project": 24    
+    "project": 24    #
 }
 
 def keep_tables_on_one_page(doc):
