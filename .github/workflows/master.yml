@@ -44,6 +44,8 @@ jobs:
 
     needs: [build]
 
+    if: ${{ success() }}
+
     # Set GITHUB_TOKEN required permissions
     permissions:
       contents: write
