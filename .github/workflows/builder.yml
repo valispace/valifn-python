@@ -46,7 +46,7 @@ on:
 jobs:
 
   # Build and upload artifacts
-  build:
+  build_upload_artifacts:
 
     outputs:
       release: '${{ steps.versioning.outputs.release }}'
