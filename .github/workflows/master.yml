@@ -8,6 +8,16 @@ on:
 
   push:
     branches: [master]
+    paths:
+      - 'docker/**'
+      - 'backend/**'
+      - '!backend/docs/**'
+      - '!backend/locust/**'
+      - '!backend/scripts/**'
+      - '!backend/.exclude'
+      - '!backend/.gitignore'
+      - '!backend/pyproject.toml'
+      - '!backend/requirements-*.txt'
 
 jobs:
 
@@ -33,6 +43,8 @@ jobs:
     runs-on: ubuntu-latest
 
     needs: [build]
+
+    if: ${{ success() }}
 
     # Set GITHUB_TOKEN required permissions
     permissions:

@@ -8,6 +8,16 @@ on:
 
   push:
     branches: [develop]
+    paths:
+      - 'docker/**'
+      - 'backend/**'
+      - '!backend/docs/**'
+      - '!backend/locust/**'
+      - '!backend/scripts/**'
+      - '!backend/.exclude'
+      - '!backend/.gitignore'
+      - '!backend/pyproject.toml'
+      - '!backend/requirements-*.txt'
 
   pull_request:
     branches: [staging]
@@ -22,10 +32,12 @@ jobs:
 
     secrets: inherit
 
+    if: ${{ (github.event_name == 'push') || ((github.event_name == 'pull_request') && (github.event.pull_request.head.ref == 'develop') && github.event.pull_request.merged) }}
+
     uses: ./.github/workflows/builder.yml
     with:
       branch-name: 'develop'
       update-major-version: false
-      update-minor-version: ${{ (github.event_name == 'pull_request') && github.event.pull_request.merged && (github.event.pull_request.head.ref == 'develop') }}  # The current version was promoted to release candidate (staging) 
+      update-minor-version: ${{ (github.event_name == 'pull_request') && (github.event.pull_request.head.ref == 'develop') && github.event.pull_request.merged }}  # The current version was promoted to release candidate (staging) 
       update-patch-version: false
       pre-release-type: 'alpha'
