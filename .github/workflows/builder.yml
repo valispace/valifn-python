@@ -5,7 +5,12 @@ on:
   workflow_call:
     inputs:
       branch-name:
-        description: 'Branch where the workflow was triggered'
+        description: 'Name of the branch where the workflow was triggered'
+        required: true
+        default: ''
+        type: string
+      branch-ref:
+        description: 'Reference of the branch where the workflow was triggered'
         required: true
         default: ''
         type: string
@@ -32,16 +37,16 @@ on:
     outputs:
       release:
         description: 'The current release version (e.g. `x.y`)'
-        value: '${{ jobs.build.outputs.release }}'
+        value: '${{ jobs.build_upload_artifacts.outputs.release }}'
       version:
         description: 'The current build version (e.g. `x.y.z(-(alpha|release-candidate)-(epoch))?`)'
-        value: '${{ jobs.build.outputs.version }}'
+        value: '${{ jobs.build_upload_artifacts.outputs.version }}'
       pre-release-type:
         description: 'The current pre-release type (if defined) (e.g. `alpha`, `release-candidate`, ``)'
-        value: '${{ jobs.build.outputs.pre-release-type }}'
+        value: '${{ jobs.build_upload_artifacts.outputs.pre-release-type }}'
       pre-release-metadata:
         description: 'The current pre-release metadata (if defined) (e.g. `alpha-1692107243`, `release-candidate-1692112160`, ``)'
-        value: '${{ jobs.build.outputs.pre-release-metadata }}'
+        value: '${{ jobs.build_upload_artifacts.outputs.pre-release-metadata }}'
 
 jobs:
 
@@ -71,7 +76,7 @@ jobs:
           echo "repository_owner=$( echo "${{ github.repository_owner }}" )" >> $GITHUB_OUTPUT
           echo "repository_name=$( echo "${{ github.event.repository.name }}" )" >> $GITHUB_OUTPUT
           echo "branch_name=$( echo "${{ inputs.branch-name }}" )" >> $GITHUB_OUTPUT
-          echo "branch_ref=$( echo "refs/heads/${{ inputs.branch-name }}" )" >> $GITHUB_OUTPUT
+          echo "branch_ref=$( echo "${{ inputs.branch-ref }}" )" >> $GITHUB_OUTPUT
           echo "update_major_version=$( echo "${{ inputs.update-major-version }}" )" >> $GITHUB_OUTPUT
           echo "update_minor_version=$( echo "${{ inputs.update-minor-version }}" )" >> $GITHUB_OUTPUT
           echo "update_patch_version=$( echo "${{ inputs.update-patch-version }}" )" >> $GITHUB_OUTPUT
@@ -112,7 +117,7 @@ jobs:
           repository-name: '${{ steps.setup.outputs.repository_name }}'
           branch-name: '${{ steps.setup.outputs.branch_name }}'
           commit-author: 'github_actions'
-          commit-message: '${{ steps.setup.outputs.repository_name }} build ${{ steps.versioning.outputs.version }}'
+          commit-message: 'feat(release): build ${{ steps.versioning.outputs.version }}'
 
       - name: 'Build docker image'
         id: docker-build-image
