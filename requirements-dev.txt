@@ -1,6 +1,0 @@
---requirement requirements.txt
-
-black==22.12.0                                   # The uncompromising code formatter
-bandit==1.7.4                                   # A Python source code security analyzer
-pip-upgrader==1.4.15                            # Helps to upgrade requirements.txt
-pylint==2.14.5                                  # Linter (cannot update further without breaking integration with pylint-django)
