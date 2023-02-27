@@ -13,7 +13,8 @@ updates:
     commit-message:
       prefix: "ci(workflows)"
     ignore:
-      - update-types: ["version-update:semver-major"]
+      - dependency-name: '*'
+        update-types: ["version-update:semver-major"]
 
   # Maintain dependencies for Docker
   - package-ecosystem: "docker"
@@ -26,7 +27,8 @@ updates:
     commit-message:
       prefix: "build(docker)"
     ignore:
-      - update-types: ["version-update:semver-major"]
+      - dependency-name: '*'
+        update-types: ["version-update:semver-major"]
 
   # Maintain dependencies for Python
   - package-ecosystem: "pip"
@@ -39,7 +41,8 @@ updates:
     commit-message:
       prefix: "build(pip)"
     ignore:
-      - update-types: ["version-update:semver-major"]
+      - dependency-name: '*'
+        update-types: ["version-update:semver-major"]
       - dependency-name: "pylint"
         versions: [">2.x"]  # cannot update further without breaking integration with pylint-django-2.5.3
       - dependency-name: "pyparsing"
