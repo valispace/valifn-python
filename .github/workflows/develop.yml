@@ -1,4 +1,4 @@
-name: 'Develop'
+name: 'Development'
 
 concurrency:
   group: 'develop-${{ github.repository_owner }}-${{ github.event.repository.name }}'
