@@ -1,5 +1,9 @@
 name: 'Manual Build'
 
+concurrency:
+  group: 'build-${{ github.repository_owner }}-${{ github.event.repository.name }}-${{ github.ref_name }}'
+  cancel-in-progress: true  # Allow only one concurrent workflow
+
 on:
 
   workflow_dispatch:
@@ -16,6 +20,7 @@ jobs:
     uses: ./.github/workflows/builder.yml
     with:
       branch-name: '${{ github.ref_name }}'
+      branch-ref: '${{ github.ref }}'
       update-major-version: false
       update-minor-version: false
       update-patch-version: false
