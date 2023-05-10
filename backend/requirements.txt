@@ -1,6 +1,9 @@
 # Valispace packages (mandatory)
 valispace==0.1.16 # Valispace Python API
 
+# Valispace integration Packages (optional)
+git+https://github.com/SimScaleGmbH/simscale-python-sdk.git@0.2.0
+
 # Basic scientifical packages (mandatory)
 git+https://git@github.com/valispace/pint.git@0.21.dev0+valispace#egg=pint # Physical quantities module (Valispace version)
 scipy==1.9.3 # Fundamental algorithms for scientific computing in Python
