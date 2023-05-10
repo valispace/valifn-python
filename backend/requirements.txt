@@ -1,20 +1,31 @@
 # Valispace packages (mandatory)
 valispace==0.1.16 # Valispace Python API
 
+# Valispace integration Packages (optional)
+git+https://github.com/SimScaleGmbH/simscale-python-sdk.git@0.2.0 # SimScale Python SDK
+
 # Basic scientifical packages (mandatory)
 git+https://git@github.com/valispace/pint.git@0.21.dev0+valispace#egg=pint # Physical quantities module (Valispace version)
 scipy==1.9.3 # Fundamental algorithms for scientific computing in Python
 
 # Add your packages here (optional)
-requests==2.28.2
-openpyxl==3.1.0
-xlrd==1.2.0
-natsort==8.2.0
-docx-mailmerge2==0.6.2
-docx2python==2.0.4
-python-docx==0.8.11
-Pillow==9.3.0
-htmldocx==0.0.6
-pip-system-certs==3.1
-Pandas==1.5.3
-numpy==1.23.5
+beautifulsoup4==4.11.2 # Screen-scraping library
+deepdiff==6.2.3 # Deep Difference and Search of any Python object/data (recreate objects by adding deltas to each other)
+docx-mailmerge2==0.6.2 # Performs a Mail Merge on docx (Microsoft Office Word) files
+docx2python==2.5.0 # Extract content from docx files
+docxtpl==0.16.5 # Python docx template engine
+htmldocx==0.0.6 # Convert html to docx
+jira==3.4.1 # Python library for interacting with JIRA via REST APIs
+more-itertools==9.0.0 # More routines for operating on iterables, beyond itertools
+natsort==8.2.0 # Simple yet flexible natural sorting in Python
+numpy==1.24.1 # Fundamental package for array computing in Python
+openpyxl==3.1.0 # A Python library to read/write Excel 2010 xlsx/xlsm files
+pandas==1.5.3 # Powerful data structures for data analysis, time series, and statistics
+pillow==9.4.0 # Python Imaging Library (Fork)
+pip-system-certs==3.1 # Live patches pip to use system certs by default
+python-docx==0.8.11 # Create and update Microsoft Word .docx files
+requests==2.28.2 # Python HTTP for Humans
+slack_sdk==3.19.5 # The Slack API Platform SDK for Python
+xacro4sdf==2.1.0 # A simple XML macro script for SDF, like ros/xacro which is designed for URDF
+xlrd==2.0.1 # Library for developers to extract data from Microsoft Excel (tm) .xls spreadsheet files
+xlsxwriter==3.0.7 # A Python module for creating Excel XLSX files
