@@ -1,7 +1,7 @@
 name: 'Issues'
 
 concurrency:
-  group: 'issues-${{ github.repository_id }}'
+  group: 'issues-${{ github.repository_owner }}-${{ github.event.repository.name }}'
   cancel-in-progress: true  # Allow only one concurrent workflow
 
 on:
