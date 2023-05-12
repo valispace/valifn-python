@@ -10,7 +10,7 @@ __author__ = "Gonçalo Ivo"
 __copyright__ = "Copyright 2022, Valispace"
 __credits__ = ["Gonçalo Ivo"]
 __license__ = "GPL"
-__version__ = "1.0"
+__version__ = "1.1"
 __maintainer__ = "Valispace"
 __email__ = "support@valispace.com"
 __status__ = "Development"
@@ -20,10 +20,10 @@ import csv, json
 from valispace import API
 
 import warnings
-import os
 import urllib.request
 import site
 site.addsitedir('script_code/') # Required to import other files in script
+from .settings import Username, Password # Required to User Secrets defined at Settings
 
 from ast import Str
 from collections.abc import Callable
@@ -31,8 +31,8 @@ from xmlrpc.client import Boolean
 
 VALISPACE = {
     'domain': 'https://.valispace.com/',
-    'username': '',
-    'password': ''
+    'username': Username,
+    'password': Password
 }
 
 DEFAULT_VALUES = {
@@ -79,9 +79,9 @@ def main(**kwargs):
         elif all_project_test_runs[run]['status'] == 40:
             failed_runs += 1
 
+    #The following lines will place the Passed and Failed information into two text blocks a Dashboard. It can, for example, also be placed in an Analysis block or Valis.
     api.request('patch', "dashboards/blocks/blocktext/12/", {"text": "Number of Passed Test Runs ->  "+ str(pass_runs) + "<p>new line</p>"})    
     api.request('patch', "dashboards/blocks/blocktext/13/", {"text": "Number of Failed Test Runs ->  "+ str(failed_runs)})
-    #api.request('patch', "dashboards/blocks/blocktext/97/", {"text": "Number of Failed Test Runs ->  "+ str(failed_runs)})  
     pass
 
 if __name__=='__main__':
