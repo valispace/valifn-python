@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-    Posts a task assigned to user who triggered it
+    Posts a task assigned to user who triggered it (via automation)
     Should assign object that triggered it
     Functionality not fully developed.
 """
@@ -10,7 +10,7 @@ __author__ = "Gonçalo Ivo"
 __copyright__ = "Copyright 2022, Valispace"
 __credits__ = ["Gonçalo Ivo"]
 __license__ = "GPL"
-__version__ = "1.0"
+__version__ = "1.1"
 __maintainer__ = "Valispace"
 __email__ = "support@valispace.com"
 __status__ = "Development"
@@ -20,13 +20,13 @@ from valispace import API
 from datetime import datetime, timedelta
 import site
 site.addsitedir('script_code/') # Required to import other files in script
-
+from .settings import Username, Password # Required to User Secrets defined at Settings
 
 
 VALISPACE = {
     'domain': 'https://.valispace.com/',
-    'username': '',
-    'password': ''
+    'username': Username,
+    'password': Password
 }
 
 DEFAULT_VALUES = {
@@ -45,9 +45,9 @@ def main(**kwargs):
     DEFAULT_VALUES["start_date"] = api.get('project/'+str(DEFAULT_VALUES["project"]))['start_date']
     DEFAULT_VALUES["today_date"] = datetime.now().strftime("%Y-%m-%d")
     print (DEFAULT_VALUES["today_date"])
-    print(kwargs)
     
-    #object_id = triggers[0]['id']
+    #It will get the object (requirement, vali,...) that triggerd the automation
+    object_id = kwargs['triggered_objects'][0]['id']
 
     taskData = {                                
         "title" : "testing Task Creation",
@@ -57,11 +57,11 @@ def main(**kwargs):
         "duration_unit" :  "days",                                
         "start_date" :  DEFAULT_VALUES["today_date"],
         "content_type" : 38,
-        #"object_id": object_id,
-        "object_id": 13700,
+        "object_id": object_id,
         "public" : True
         }
     createdTask = api.post('user-tasks/', data=taskData)
+    #here it's adding by default the User with ID #5 to the task. Can be expanded/changed to other users 
     updatedTask = api.request('PUT', 'user-tasks/'+str(createdTask['id'])+"/add-member/", data={"member": "5"})
    
     pass
