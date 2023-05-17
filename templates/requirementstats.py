@@ -10,7 +10,7 @@ __author__ = "Gonçalo Ivo"
 __copyright__ = "Copyright 2022, Valispace"
 __credits__ = ["Gonçalo Ivo"]
 __license__ = "GPL"
-__version__ = "1.0"
+__version__ = "1.1"
 __maintainer__ = "Valispace"
 __email__ = "support@valispace.com"
 __status__ = "Development"
@@ -19,11 +19,11 @@ import csv, json
 from valispace import API
 
 import warnings
-import os
 import urllib.request
 import time
 import site
 site.addsitedir('script_code/') # Required to import other files in script
+from .settings import Username, Password # Required to User Secrets defined at Settings
 
 from ast import Str
 from collections.abc import Callable
@@ -31,8 +31,8 @@ from xmlrpc.client import Boolean
 
 VALISPACE = {
     'domain': 'https://.valispace.com/',
-    'username': '',
-    'password': ''
+    'username': Username,
+    'password': Password
 }
 
 DEFAULT_VALUES = {
@@ -126,7 +126,8 @@ def main(**kwargs):
     time.sleep(15)
 
     
-
+    #Following part of teh code is considering you have Valis to store the statistics results
+    #Other option would be to write them directly in an Analysis or Dashboard Text block(s)
     api.request("patch", "valis/12813/", data={"formula":nr_reqs})
     api.request("patch", "valis/12814/", data={"formula":nr_req_w_children})
     api.request("patch", "valis/12815/", data={"formula":nr_req_w_vm})    

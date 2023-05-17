@@ -112,7 +112,7 @@ jobs:
         if: ${{ (inputs.update-major-version == 'true') || (inputs.update-minor-version == 'true') || (inputs.update-patch-version == 'true') || (inputs.pre-release-type != 'NaN') }}
         uses: valispace/actions/commit-changes@master
         with:
-          protected-branch-token: '${{ secrets.GH_ACTIONS_REPO_ADMIN_CI_TOKEN }}'
+          protected-branch-token: '${{ secrets.REPO_ADMIN_TOKEN }}'
           repository-owner: '${{ steps.setup.outputs.repository_owner }}'
           repository-name: '${{ steps.setup.outputs.repository_name }}'
           branch-name: '${{ steps.setup.outputs.branch_name }}'

@@ -3,14 +3,14 @@
 """
     Takes input from automation that triggers it.
     Automation is triggered by updating a requirement
-    Posts discussions to that requirement's children.    
+    Posts discussions to that requirement's children mentioning the user changing the requirement   
 """
 
 __author__ = "Gonçalo Ivo"
 __copyright__ = "Copyright 2022, Valispace"
 __credits__ = ["Gonçalo Ivo"]
 __license__ = "GPL"
-__version__ = "1.0"
+__version__ = "1.1"
 __maintainer__ = "Valispace"
 __email__ = "support@valispace.com"
 __status__ = "Development"
@@ -21,6 +21,7 @@ import warnings
 import time
 import site
 site.addsitedir('script_code/') # Required to import other files in script
+from .settings import Username, Password # Required to User Secrets defined at Settings
 
 # Installed packages
 from ast import Str
@@ -29,8 +30,8 @@ from xmlrpc.client import Boolean
 
 VALISPACE = {
     'domain': 'https://.valispace.com/',
-    'username': '',
-    'password': ''
+    'username': Username,
+    'password': Password
 }
 
 DEFAULT_VALUES = {
@@ -71,12 +72,10 @@ def main(**kwargs):
 
     all_deployment_users = get_map(api, f"user/", "id")
 
+    #it get the triggered object (in this case a requirement) 
     requirement_data = kwargs['triggered_objects'][0]
-
-    #requirement_data = api.get('requirements/81') #just for testing now without automation to receive the trigger object
     print(requirement_data)
-    time.sleep(15)
-    
+        
     user_changing_req = all_deployment_users[requirement_data['updated_by']]
     username = user_changing_req['first_name']+" "+user_changing_req['last_name']
     user = f"<span class=\"quill-autocomplete\" host=\"user\" itemid=\"{user_changing_req['id']}\" name=\"{username}\" field=\"displayName\"><user editable=\"true\" itemid=\"{user_changing_req['id']}\" field=\"displayName\">@{username}</user></span>"
@@ -88,7 +87,7 @@ def main(**kwargs):
         for children in req_children:
 
             discussionData = {                                
-                "title" : user + " -> Parent of "+ requirement + " was updated",
+                "title" : user + " made and update to Parent "+ requirement,
                 "project": DEFAULT_VALUES["project"],
                 "content_type" :  120,                             
                 "group": 1,
