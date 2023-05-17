@@ -19,7 +19,6 @@ __status__ = "Development"
 from typing import Any, Dict
 import operator
 import warnings
-import os #used for running in desktop IDE
 import getpass #used for running in desktop IDE
 import requests
 import site
