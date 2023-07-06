@@ -6,7 +6,7 @@ git+https://github.com/SimScaleGmbH/simscale-python-sdk.git@2.0.0 # SimScale Pyt
 
 # Basic scientifical packages (mandatory)
 git+https://git@github.com/valispace/pint.git@0.21.dev0+valispace#egg=pint # Physical quantities module (Valispace version)
-scipy==1.9.3 # Fundamental algorithms for scientific computing in Python
+scipy==1.10.0 # Fundamental algorithms for scientific computing in Python
 
 # Add your packages here (optional)
 beautifulsoup4==4.11.2 # Screen-scraping library
