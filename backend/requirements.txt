@@ -2,7 +2,7 @@
 valispace==0.1.16 # Valispace Python API
 
 # Valispace integration Packages (optional)
-git+https://github.com/SimScaleGmbH/simscale-python-sdk.git@2.0.0 # SimScale Python SDK
+git+https://github.com/SimScaleGmbH/simscale-python-sdk.git@4.0.0 # SimScale Python SDK
 
 # Basic scientifical packages (mandatory)
 git+https://git@github.com/valispace/pint.git@0.21.dev0+valispace#egg=pint # Physical quantities module (Valispace version)
