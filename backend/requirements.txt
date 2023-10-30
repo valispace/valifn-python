@@ -29,4 +29,5 @@ slack_sdk==3.19.5 # The Slack API Platform SDK for Python
 xacro4sdf==2.1.0 # A simple XML macro script for SDF, like ros/xacro which is designed for URDF
 xlrd==2.0.1 # Library for developers to extract data from Microsoft Excel (tm) .xls spreadsheet files
 xlsxwriter==3.0.7 # A Python module for creating Excel XLSX files
-plotly==5.16.1 #Browser based graphing library
+plotly==5.16.1 # Browser based graphing library
+kaleido==0.2.1 # dependency for plotly static image export: https://plotly.com/python/static-image-export/
