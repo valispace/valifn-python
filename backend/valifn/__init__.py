@@ -1,2 +1,2 @@
-__version__ = "1.6.0-release-candidate-1695203953"
+__version__ = "1.7.0-alpha-1699264746"
 
