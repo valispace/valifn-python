@@ -1,5 +1,5 @@
 # Valispace packages (mandatory)
-valispace==0.1.21 # Valispace Python API
+valispace==0.1.22 # Valispace Python API
 
 # Valispace integration Packages (optional)
 git+https://github.com/SimScaleGmbH/simscale-python-sdk.git@4.0.0 # SimScale Python SDK
