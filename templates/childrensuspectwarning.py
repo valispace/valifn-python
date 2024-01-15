@@ -3,7 +3,7 @@
 """
     Takes input from automation that triggers it.
     Automation is triggered by updating a requirement
-    Posts discussions to that requirement's children.    
+    Posts discussions to that requirement's children mentioning the user changing the requirement   
 """
 
 __author__ = "Gonçalo Ivo"
@@ -21,6 +21,7 @@ import warnings
 import time
 import site
 site.addsitedir('script_code/') # Required to import other files in script
+from .settings import Username, Password # Required to User Secrets defined at Settings
 
 # Installed packages
 from ast import Str
@@ -76,8 +77,6 @@ def main(**kwargs):
     #requirement_data = api.get('requirements/90') #just for testing now without automation to receive the trigger object
     
     print(requirement_data)
-    
-    
     print(requirement_data["children"])
     req_children = requirement_data["children"]
     if len(req_children)>0:

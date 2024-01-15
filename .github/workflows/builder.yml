@@ -89,6 +89,15 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: '${{ steps.setup.outputs.branch_ref }}'
+    
+      - name: Determine environment
+        id: determine_environment
+        run: |
+          if [ "${{ github.ref_name }}" = "master" ]; then
+            echo "::set-output name=environment::prod"
+          else
+            echo "::set-output name=environment::${{ github.ref_name }}"
+          fi
 
       - name: 'Bump build version'
         id: bump-build-version
@@ -112,12 +121,27 @@ jobs:
         if: ${{ (inputs.update-major-version == 'true') || (inputs.update-minor-version == 'true') || (inputs.update-patch-version == 'true') || (inputs.pre-release-type != 'NaN') }}
         uses: valispace/actions/commit-changes@master
         with:
-          protected-branch-token: '${{ secrets.GH_ACTIONS_REPO_ADMIN_CI_TOKEN }}'
+          protected-branch-token: '${{ secrets.REPO_ADMIN_TOKEN }}'
           repository-owner: '${{ steps.setup.outputs.repository_owner }}'
           repository-name: '${{ steps.setup.outputs.repository_name }}'
           branch-name: '${{ steps.setup.outputs.branch_name }}'
           commit-author: 'github_actions'
           commit-message: 'feat(release): build ${{ steps.versioning.outputs.version }}'
+      
+      - name: 'Build and push docker image to AWS ECR'
+        id: aws-build-push-image
+        uses: valispace/actions/aws-build-push-image@master
+        with:
+          aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+          aws-ecr-repository: '${{ github.event.repository.name }}'
+          aws-s3-bucket: '${{ secrets.S3_BUCKET }}'
+          aws-s3-repository: '${{ github.event.repository.name }}'
+          aws-s3-branch: '${{ github.ref_name }}'
+          dockerfile-path: 'docker/backend/Dockerfile'
+          version: '${{ steps.versioning.outputs.version }}'
+          environment: '${{ steps.determine_environment.outputs.environment }}'
+          archive-name: '${{ github.event.repository.name }}-docker'
 
       - name: 'Build docker image'
         id: docker-build-image
