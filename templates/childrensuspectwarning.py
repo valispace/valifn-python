@@ -7,10 +7,10 @@
 """
 
 __author__ = "Gonçalo Ivo"
-__copyright__ = "Copyright 2022, Valispace"
+__copyright__ = "Copyright 2024, Valispace"
 __credits__ = ["Gonçalo Ivo"]
 __license__ = "GPL"
-__version__ = "1.1"
+__version__ = "1.2"
 __maintainer__ = "Valispace"
 __email__ = "support@valispace.com"
 __status__ = "Development"
@@ -29,13 +29,13 @@ from collections.abc import Callable
 from xmlrpc.client import Boolean
 
 VALISPACE = {
-    'domain': 'https://.valispace.com/',
-    'username': Username,
-    'password': Password
+    'domain': 'https://deployment_name.valispace.com/',
+    'username': '',
+    'password': ''
 }
 
 DEFAULT_VALUES = {
-    "project": 24,
+    "project": PROJECT_ID,
 }
 
 
@@ -71,23 +71,30 @@ def main(**kwargs):
         )
 
     all_deployment_users = get_map(api, f"user/", "id")
-
-    #it get the triggered object (in this case a requirement) 
+    all_project_requirements = get_map(api, f"requirements/?project="+str(DEFAULT_VALUES['project']), "id") 
     requirement_data = kwargs['triggered_objects'][0]
-    print(requirement_data)
-        
-    user_changing_req = all_deployment_users[requirement_data['updated_by']]
-    username = user_changing_req['first_name']+" "+user_changing_req['last_name']
-    user = f"<span class=\"quill-autocomplete\" host=\"user\" itemid=\"{user_changing_req['id']}\" name=\"{username}\" field=\"displayName\"><user editable=\"true\" itemid=\"{user_changing_req['id']}\" field=\"displayName\">@{username}</user></span>"
-    requirement = f"<span class=\"quill-autocomplete\" host=\"requirement\" itemid=\"{requirement_data['id']}\" name=\"{requirement_data['identifier']}\" field=\"identifier\"><requirement editable=\"true\" itemid=\"{requirement_data['id']}\" field=\"identifier\">${requirement_data['identifier']}</requirement></span>"
 
+    #requirement_data = api.get('requirements/90') #just for testing now without automation to receive the trigger object
+    
+    print(requirement_data)
     print(requirement_data["children"])
     req_children = requirement_data["children"]
     if len(req_children)>0:
-        for children in req_children:
+        user_changing_req = all_deployment_users[requirement_data['updated_by']]
+        username = user_changing_req['first_name']+" "+user_changing_req['last_name']
+        requirement = f"<span class=\"quill-autocomplete\" host=\"requirement\" itemid=\"{requirement_data['id']}\" name=\"{requirement_data['identifier']}\" field=\"identifier\"><requirement editable=\"true\" itemid=\"{requirement_data['id']}\" field=\"identifier\">${requirement_data['identifier']}</requirement></span>"
 
+        for children in req_children:
+            print(all_project_requirements[children])
+            if all_project_requirements[children]['owner'] != None:
+                user_owner = all_deployment_users[all_project_requirements[children]['owner']['id']]
+                ownername = user_owner['first_name']+" "+user_owner['last_name']
+                user = f"<span class=\"quill-autocomplete\" host=\"user\" itemid=\"{user_owner['id']}\" name=\"{ownername}\" field=\"displayName\"><user editable=\"true\" itemid=\"{user_owner['id']}\" field=\"displayName\">@{ownername}</user></span>"
+            else:
+                user = f"<span class=\"quill-autocomplete\" host=\"user\" itemid=\"{user_changing_req['id']}\" name=\"{username}\" field=\"displayName\"><user editable=\"true\" itemid=\"{user_changing_req['id']}\" field=\"displayName\">@{username}</user></span>"
+        
             discussionData = {                                
-                "title" : user + " made and update to Parent "+ requirement,
+                "title" : user + " -> The Parent "+ requirement + " of this requirement was updated",
                 "project": DEFAULT_VALUES["project"],
                 "content_type" :  120,                             
                 "group": 1,
