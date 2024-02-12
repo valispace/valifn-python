@@ -24,7 +24,7 @@ pandas==1.5.3 # Powerful data structures for data analysis, time series, and sta
 pillow==9.4.0 # Python Imaging Library (Fork)
 pip-system-certs==3.1 # Live patches pip to use system certs by default
 python-docx==0.8.11 # Create and update Microsoft Word .docx files
-requests==2.28.2 # Python HTTP for Humans
+requests==2.31.0 # Python HTTP for Humans
 slack_sdk==3.19.5 # The Slack API Platform SDK for Python
 xacro4sdf==2.1.0 # A simple XML macro script for SDF, like ros/xacro which is designed for URDF
 xlrd==2.0.1 # Library for developers to extract data from Microsoft Excel (tm) .xls spreadsheet files
