@@ -1,0 +1,19 @@
+name: "Merge Command Handler"
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  handle-merge:
+    runs-on: gha-eks
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/merge') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_ACTIONS_REPO_ADMIN_CI_TOKEN }}
+      - name: Handle merge
+        uses: valispace/cicd/internal/build/pr-command-merge@main
+        with:
+          comment-body: ${{ github.event.comment.body }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ACTIONS_REPO_ADMIN_CI_TOKEN }}
